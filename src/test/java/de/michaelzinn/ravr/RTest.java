@@ -5,7 +5,11 @@ import javaslang.collection.List;
 import javaslang.control.Option;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Predicate;
 
 import static de.michaelzinn.ravr.Placeholder.__;
@@ -241,6 +245,108 @@ public class RTest {
         assertThat(modulo(10, 3), is(1));
         assertThat(modulo(-5, 3), is(-2));
         assertThat(modulo(10).apply(3), is(1));
+    }
+
+
+    @Test
+    public void testMultiply() {
+
+        /* All direct subtypes of Number:
+            AtomicInteger,
+            AtomicLong,
+            BigDecimal,
+            BigInteger,
+            Byte,
+            Double,
+            Float,
+            Integer,
+            Long,
+            Short
+         */
+
+        assertThat(
+                multiply( new AtomicInteger(2), new AtomicInteger(3) ).get(),
+                is(new AtomicInteger(6).get())
+        );
+
+        assertThat(
+                multiply(new AtomicLong(2), new AtomicLong(3)).get(),
+                is(new AtomicLong(6).get())
+        );
+
+        assertThat(
+                multiply(BigDecimal.TEN, BigDecimal.TEN),
+                is(BigDecimal.TEN.multiply(BigDecimal.TEN))
+        );
+
+        assertThat(
+                multiply(BigInteger.TEN, BigInteger.TEN),
+                is(new BigInteger("100"))
+        );
+
+        assertThat(
+                multiply((byte) 2, (byte) 3),
+                is((byte) 6)
+        );
+
+        assertThat(
+                multiply(2.0, 3.2),
+                is(6.4)
+        );
+
+        assertThat(
+                multiply(2f, 3.2f),
+                is(6.4f)
+        );
+
+        assertThat(
+                multiply(2, 3),
+                is(6)
+        );
+
+        assertThat(
+                multiply(2L, 3L),
+                is(6L)
+        );
+
+        assertThat(
+                multiply((short) 2, (short) 3),
+                is((short) 6)
+        );
+
+    }
+
+
+    @Test
+    public void testPipe() {
+        List<String> words = List.of("SIHT", "SI", "GNITSERETNI");
+
+        assertThat(
+                words.map(R.pipe(
+                        R::reverse,
+                        R::toLower
+                )),
+                is(List.of("this", "is", "interesting"))
+        );
+
+        /*
+        assertThat(
+                add(1),
+        );
+        */
+    }
+
+    @Test
+    public void testReverse() {
+        assertThat(
+                reverse(List.of(1, 2, 3)),
+                is(List.of(3, 2, 1))
+        );
+
+        assertThat(
+                reverse("inventor"),
+                is("rotnevni")
+        );
     }
 
     @Test

@@ -52,7 +52,7 @@ fabric.properties
 # Why would I need the idea stuff?
 .idea/*
 
-.swp
+*.swp
 *.iml
 target
 

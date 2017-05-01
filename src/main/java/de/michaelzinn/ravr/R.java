@@ -2,13 +2,21 @@ package de.michaelzinn.ravr;
 
 import javaslang.Function1;
 import javaslang.Function2;
+import javaslang.Function3;
+import javaslang.Predicates;
 import javaslang.collection.List;
 import javaslang.collection.Traversable;
 import javaslang.control.Option;
+import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -50,6 +58,55 @@ public class R {
         return a -> !predicate.test(a);
     }
 
+    public static <A>
+    Function1<A, A> compose() {
+        return a -> a;
+    }
+
+    public static <A, B>
+    Function1<A, B> compose(
+            Function1<A, B> ab
+    ) {
+        return ab;
+    }
+
+    public static <A, B, C>
+    Function1<A, C> compose(
+            Function1<B, C> bc,
+            Function1<A, B> ab
+    ) {
+        return a -> bc.apply(ab.apply(a));
+    }
+
+    public static <A, B, C, D>
+    Function1<A, D> compose(
+            Function1<C, D> cd,
+            Function1<B, C> bc,
+            Function1<A, B> ab
+    ) {
+        return a -> cd.apply(bc.apply(ab.apply(a)));
+    }
+
+    public static <A, B, C, D, E>
+    Function1<A, E> compose(
+            Function1<D, E> de,
+            Function1<C, D> cd,
+            Function1<B, C> bc,
+            Function1<A, B> ab
+    ) {
+        return a -> de.apply(cd.apply(bc.apply(ab.apply(a))));
+    }
+
+    public static <A, B, C, D, E, F>
+    Function1<A, F> compose(
+            Function1<E, F> ef,
+            Function1<D, E> de,
+            Function1<C, D> cd,
+            Function1<B, C> bc,
+            Function1<A, B> ab
+    ) {
+        return a -> ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))));
+    }
 
     public static <A>
     A defaultTo(A a, Option<A> optionA) {
@@ -77,6 +134,16 @@ public class R {
         return list -> list.filter(p);
     }
 
+
+    public static <A, B>
+    B ifElse(Predicate<A> predicate, Function1<A, B> then, Function1<A, B> els, A value) {
+       return predicate.test(value) ? then.apply(value) : els.apply(value);
+    }
+
+    public static <A, B>
+    Function1<A, B> ifElse(Predicate<A> predicate, Function1<A, B> then, Function1<A, B> els) {
+        return value -> ifElse(predicate, then, els, value);
+    }
 
     public static <A>
     Option<String> join(String joiner, List<A> list) {
@@ -119,6 +186,77 @@ public class R {
     public static Function1<Integer, Integer> modulo(Integer a) {
         return n -> a % n;
     }
+
+
+    public static
+    AtomicInteger multiply(AtomicInteger a, AtomicInteger b) {
+        return new AtomicInteger(a.get() * b.get());
+    }
+        /*
+            AtomicInteger,
+            AtomicLong,
+            BigDecimal,
+            BigInteger,
+            Byte,
+            Double,
+            Float,
+            Integer,
+            Long,
+            Short
+         */
+
+    public static
+    AtomicLong multiply(AtomicLong a, AtomicLong b) {
+        return new AtomicLong(a.get() * b.get());
+    }
+
+    public static
+    Byte multiply(Byte a, Byte b) {
+        return (Byte) (byte) (a * b);
+    }
+
+    public static
+    Double multiply(Double a, Double b) {
+        return a * b;
+    }
+
+    public static
+    Float multiply(Float a, Float b) {
+        return a * b;
+    }
+
+    public static
+    BigDecimal multiply(BigDecimal a, BigDecimal b) {
+        return a.multiply(b);
+    }
+
+    public static
+    BigInteger multiply(BigInteger a, BigInteger b) {
+        return a.multiply(b);
+    }
+
+    public static
+    Integer multiply(Integer a, Integer b) {
+        return a * b;
+    }
+
+    public static
+    Long multiply(Long a, Long b) {
+        return a * b;
+    }
+
+    public static
+    Short multiply(Short a, Short b) {
+        return (short) (a * b);
+    }
+
+
+
+    public static
+    Function1<Long, Long> multiply(Long a) {
+        return b -> a * b;
+    }
+
 
 
     public static <S extends Copyable<S>, A>
@@ -188,6 +326,42 @@ public class R {
     ) {
         return a -> ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))));
     }
+
+
+    /**
+     * Reverses the String. Currently breaks characters outside of the BMP.
+     *
+     * @param string
+     * @return string with the code points (not scalar values) reversed.
+     */
+    public static
+    String reverse(String string) {
+        StringBuilder reversed = new StringBuilder();
+        for(int i = string.length() -1 ; i >= 0 ; i--) {
+            reversed.append(string.charAt(i));
+        }
+        return reversed.toString();
+    }
+
+    /*
+    public static
+    Function1<String, String> reverse() {
+        return R::reverse;
+    }
+    */
+
+    public static <A>
+    List<A> reverse(List<A> list) {
+        return list.reverse();
+    }
+
+    /*
+    public static <A>
+    Function1<List<A>, List<A>> reverse() {
+       return R::reverse;
+    }
+    */
+
 
 
     public static <S extends Copyable<S>, A>

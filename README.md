@@ -96,10 +96,13 @@ Thing lookingGlass = new Thing("looking glass", 5);
 
 get(name, lookingGlass); // "looking glass"
 
-Thing betterThing = pipe(
+Function1<Thing, Thing>
+improve = pipe(
 	set(name, "ten times better"),
 	over(quality, multiply(10))
-).apply(lookingGlass);
+);
+
+Thing betterThing = improve.apply(lookingGlass);
 
 get(quality, betterThing); // 50
 get(quality, lookingGlass); // 5 (not changed)
