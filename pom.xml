@@ -2,11 +2,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
     <groupId>de.michaelzinn.ravr</groupId>
     <artifactId>ravr</artifactId>
-    <version>0.1</version>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+
+    <name>ravr</name>
+    <description>Java port of the Javascript Ramda library.</description>
+    <url>https://github.com/RedNifre/ravr</url>
+
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License v3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/RedNifre/ravr</url>
+    </scm>
+
     <build>
         <plugins>
             <plugin>
