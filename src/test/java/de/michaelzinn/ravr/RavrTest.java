@@ -7,14 +7,12 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Predicate;
 
 import static de.michaelzinn.ravr.Placeholder.__;
-import static de.michaelzinn.ravr.R.*;
-import static java.util.Objects.nonNull;
+import static de.michaelzinn.ravr.Ravr.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -22,7 +20,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by michael on 16.04.17.
  */
-public class RTest {
+public class RavrTest {
 
     @Test
     public void complexExample() {
@@ -56,8 +54,8 @@ public class RTest {
 
     @Test
     public void testAdd() {
-        assertEquals((Integer) 3, R.add(1, 2));
-        assertEquals(List.of(2, 3, 4), List.of(1, 2, 3).map(R.add(1)));
+        assertEquals((Integer) 3, Ravr.add(1, 2));
+        assertEquals(List.of(2, 3, 4), List.of(1, 2, 3).map(Ravr.add(1)));
     }
 
     @Test
@@ -346,10 +344,10 @@ public class RTest {
 
         assertThat(
                 join("... ", words.map(pipe(
-                        R::reverse,
-                        R::toLower,
-                        R::init,
-                        R::tail
+                        Ravr::reverse,
+                        Ravr::toLower,
+                        Ravr::init,
+                        Ravr::tail
                 ))),
                 is("this... is... interesting")
         );

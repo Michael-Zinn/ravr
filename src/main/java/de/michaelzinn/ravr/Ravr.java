@@ -1,28 +1,21 @@
 package de.michaelzinn.ravr;
 
 import javaslang.Function1;
-import javaslang.Function2;
-import javaslang.Function3;
-import javaslang.Predicates;
 import javaslang.collection.List;
 import javaslang.collection.Traversable;
 import javaslang.control.Option;
-import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
  * Created by michael on 16.04.17.
  */
-public class R {
+public class Ravr {
 
     // Ramda
 
@@ -364,7 +357,7 @@ public class R {
     /*
     public static
     Function1<String, String> reverse() {
-        return R::reverse;
+        return Ravr::reverse;
     }
     */
 
@@ -376,7 +369,7 @@ public class R {
     /*
     public static <A>
     Function1<List<A>, List<A>> reverse() {
-       return R::reverse;
+       return Ravr::reverse;
     }
     */
 
@@ -436,7 +429,7 @@ public class R {
     }
 
     public static Function1<String, String> toLower() {
-        return R::toLower;
+        return Ravr::toLower;
     }
 
 
@@ -445,7 +438,7 @@ public class R {
     }
 
     public static Function1<String, String> toUpper() {
-        return R::toUpper;
+        return Ravr::toUpper;
     }
 
 
@@ -469,7 +462,7 @@ public class R {
 
     public static <A>
     Function1<List<Option<A>>, List<A>> catOptions() {
-        return R::catOptions;
+        return Ravr::catOptions;
     }
 
 }

@@ -1,7 +1,5 @@
 # Ravr
 
-_Bring Java developers to tears_
-
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
 ## Curried functions & partial function application
@@ -9,22 +7,22 @@ This is a partial port of the [Ramda.js functional programming library](http://r
 Java8 already allows partial function application in an all-or-nothing way:
 
 ```java
-List(1, 2, 3).map(x -> R.inc(x)); // [2,3,4]
-List(1, 2, 3).map(R::inc); // [2,3,4]
+List(1, 2, 3).map(x -> inc(x)); // [2,3,4]
+List(1, 2, 3).map(inc()); // [2,3,4]
 ```
 
 Ravr provides two more ways to do partial application, either leave out parameters at the end or use a parameter placeholder:
 
 ```java
-List(1, 2, 3).map(x -> R.add(2, x)); // [3, 4, 5]
-List(1, 2, 3).map(R.add(2, __)); // [3, 4, 5]
-List(1, 2, 3).map(R.add(2)); // [3, 4, 5]
+List(1, 2, 3).map(x -> add(2, x)); // [3, 4, 5]
+List(1, 2, 3).map(add(2, __)); // [3, 4, 5]
+List(1, 2, 3).map(add(2)); // [3, 4, 5]
 ```
 
 The placeholder is rarely necessary because the parameters are usually arranged in a way that leans itself towards leaving out the last parameter. An example where it is needed is where functions mimic the parameter order of the corresponding operator, e.g. subtract:
 
 ```java
-List(7, 8, 9).map(R.subtract(__, 2)); // [5, 6, 7]
+List(7, 8, 9).map(subtract(__, 2)); // [5, 6, 7]
 ```
 
 ## Function composition
