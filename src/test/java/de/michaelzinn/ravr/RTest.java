@@ -47,8 +47,7 @@ public class RTest {
                 "0..1..2",
                 pipe(
                         map(subtract(__, 1)),
-                        join(".."),
-                        Option::get
+                        join("..")
                 ).apply(List.of(1, 2, 3))
         );
     }
@@ -119,8 +118,7 @@ public class RTest {
 
         Function1<List<Integer>, String> f = pipe(
                 filter(complement(isEven)),
-                join(""),
-                defaultTo("nope")
+                join("")
         );
 
         assertEquals(
@@ -131,24 +129,49 @@ public class RTest {
 
 
     @Test
-    public void testJoin() {
-        assertEquals(
-                Option.some("hey ho"),
-                join(" ", List.of("hey", "ho")));
-
-        assertEquals(
-                Option.some("1:2:3"),
-                join(":", List.of(1, 2, 3))
+    public void testHead() {
+        assertThat(
+                head(List.of("Hey", "ho")),
+                is(Option.of("Hey"))
         );
 
-        assertEquals(
-                Option.some("noJoiner"),
-                join("notUsed", List.of("noJoiner"))
+        assertThat(
+                head(List.of()),
+                is(Option.none())
+        );
+
+        assertThat(
+                head("Hey"),
+                is(Option.some('H'))
+        );
+
+        assertThat(
+                head(""),
+                is(Option.none())
+        );
+    }
+
+
+    @Test
+    public void testJoin() {
+        assertThat(
+                join(" ", List.of("hey", "ho")),
+                is("hey ho")
+        );
+
+        assertThat(
+                join(":", List.of(1, 2, 3)),
+                is("1:2:3")
+        );
+
+        assertThat(
+                join("notUsed", List.of("noJoiner")),
+                is("noJoiner")
         );
 
         assertThat(
                 join(" ", List.of()),
-                is(Option.none())
+                is("")
         );
     }
 
@@ -231,7 +254,7 @@ public class RTest {
         assertThat(
                 persons
                         .map(over(id, add(9000)))
-                        .map(over(name, toUpper())) ,
+                        .map(over(name, toUpper())),
                 is(List.of(
                         new Person(9010, "ALICE"),
                         new Person(9001, "BOB")
@@ -265,7 +288,7 @@ public class RTest {
          */
 
         assertThat(
-                multiply( new AtomicInteger(2), new AtomicInteger(3) ).get(),
+                multiply(new AtomicInteger(2), new AtomicInteger(3)).get(),
                 is(new AtomicInteger(6).get())
         );
 
@@ -319,21 +342,18 @@ public class RTest {
 
     @Test
     public void testPipe() {
-        List<String> words = List.of("SIHT", "SI", "GNITSERETNI");
+        List<String> words = List.of("xSIHTx", "xSIx", "xGNITSERETNIx");
 
         assertThat(
-                words.map(R.pipe(
+                join("... ", words.map(pipe(
                         R::reverse,
-                        R::toLower
-                )),
-                is(List.of("this", "is", "interesting"))
+                        R::toLower,
+                        R::init,
+                        R::tail
+                ))),
+                is("this... is... interesting")
         );
 
-        /*
-        assertThat(
-                add(1),
-        );
-        */
     }
 
     @Test

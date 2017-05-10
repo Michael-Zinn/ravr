@@ -135,6 +135,16 @@ public class R {
     }
 
 
+    public static <A>
+    Option<A> head(List<A> list) {
+        return list.headOption();
+    }
+
+    public static
+    Option<Character> head(String string) {
+        return string.isEmpty() ? Option.none() : Option.some(string.charAt(0));
+    }
+
     public static <A, B>
     B ifElse(Predicate<A> predicate, Function1<A, B> then, Function1<A, B> els, A value) {
        return predicate.test(value) ? then.apply(value) : els.apply(value);
@@ -145,15 +155,21 @@ public class R {
         return value -> ifElse(predicate, then, els, value);
     }
 
-    public static <A>
-    Option<String> join(String joiner, List<A> list) {
-        return list
-                .map(Object::toString)
-                .reduceOption((l, r) -> l + joiner + r);
+
+    public static String init(String string) {
+        return string.substring(0, string.length() - 1);
     }
 
     public static <A>
-    Function1<List<A>, Option<String>> join(String joiner) {
+    String join(String joiner, List<A> list) {
+        return list
+                .map(Object::toString)
+                .reduceOption((l, r) -> l + joiner + r)
+                .getOrElse("");
+    }
+
+    public static <A>
+    Function1<List<A>, String> join(String joiner) {
         return list -> join(joiner, list);
     }
 
@@ -343,6 +359,8 @@ public class R {
         return reversed.toString();
     }
 
+
+
     /*
     public static
     Function1<String, String> reverse() {
@@ -401,6 +419,15 @@ public class R {
 
     public static Function1<Integer, Function1<Integer, Integer>> subtract() {
         return x -> y -> x - y;
+    }
+
+
+    public static <T> List<T> tail(List<T> list) {
+        return list.tail();
+    }
+
+    public static String tail(String string) {
+        return string.substring(1);
     }
 
 
