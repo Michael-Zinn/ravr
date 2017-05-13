@@ -1,4 +1,4 @@
-![ravr logo](ravr.svg)
+![ravr logo](ravr.png)
 
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
