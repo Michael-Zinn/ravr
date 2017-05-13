@@ -1,6 +1,4 @@
-<img src="./ravr.svg" alt="ravr logo" width="400px">
-
-# Ravr
+![ravr logo](ravr.svg)
 
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
