@@ -4,37 +4,14 @@ This is a partial port of the [Ramda.js functional programming library](http://r
 
 ## Curried functions & partial function application
 
-Java8 already allows partial function application in some situations but not in others:
-
-```java
-
-// -- all parameters --
-List.of(1, 2, 3).map(x -> inc(x)); 
-// => [2,3,4]
-
-// -- no paramaters --
-List.of(1, 2, 3).map(Ravr::inc);
-// => [2,3,4]
-
-
-
-// Setting the "this parameter" but no others is allowed...
-Map<String, String> names = createNamesMap();
-listOfThings.map(names::get);
-
-// ... but the opposite isn't
-listOfFoo.forEach(Foo::setX(0)); // <- won't compile!
-
-```
-
-Ravr provides two more ways to do partial application, either leave out parameters at the end or use a parameter placeholder:
+Ravr provides two ways to do partial application: Either leave out parameters at the end or use a parameter placeholder:
 
 ```java
 
 // All the same
-List(1, 2, 3).map(x -> add(2, x));
-List(1, 2, 3).map(add(2, __)); // works but isn't idiomatic
-List(1, 2, 3).map(add(2)); // use this one instead
+List.of(1, 2, 3).map(x -> add(2, x));
+List.of(1, 2, 3).map(add(2, __)); // works but isn't idiomatic
+List.of(1, 2, 3).map(add(2)); // use this one instead
 // => [3, 4, 5]
 
 // The placeholder should only be used when necessary.
@@ -140,14 +117,14 @@ get(quality, lookingGlass); // 5 (not changed)
 
 ## Other functions
 
-You can concatenate the content of a List\<Option\<X\>\> to List\<X\> with the catOptions function.
+You can concatenate the content of a List\<Option\<X\>\> to List\<X\> with the concatOptions function.
 
 ```java
 List<String> strings = List(">>>>", "", "====");
 
 pipe(
-	head(),	// List(Option.some(">"), Option.none(), Option.some("="))
-	catOptions(),	// List(">", "=")
+	head(),	// List.of(Option.some(">"), Option.none(), Option.some("="))
+	concatOptions(),	// List.of(">", "=")
 	join(">")	// ">>="
 ).apply(strings);
 ```
