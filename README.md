@@ -4,25 +4,43 @@ This is a partial port of the [Ramda.js functional programming library](http://r
 
 ## Curried functions & partial function application
 
-Java8 already allows partial function application in an all-or-nothing way:
+Java8 already allows partial function application in some situations but not in others:
 
 ```java
-List(1, 2, 3).map(x -> inc(x)); // [2,3,4]
-List(1, 2, 3).map(inc()); // [2,3,4]
+
+// -- all parameters --
+List.of(1, 2, 3).map(x -> inc(x)); 
+// => [2,3,4]
+
+// -- no paramaters --
+List.of(1, 2, 3).map(Ravr::inc);
+// => [2,3,4]
+
+
+
+// Setting the "this parameter" but no others is allowed...
+Map<String, String> names = createNamesMap();
+listOfThings.map(names::get);
+
+// ... but the opposite isn't
+listOfFoo.forEach(Foo::setX(0)); // <- won't compile!
+
 ```
 
 Ravr provides two more ways to do partial application, either leave out parameters at the end or use a parameter placeholder:
 
 ```java
-List(1, 2, 3).map(x -> add(2, x)); // [3, 4, 5]
-List(1, 2, 3).map(add(2, __)); // [3, 4, 5]
-List(1, 2, 3).map(add(2)); // [3, 4, 5]
-```
 
-The placeholder is rarely necessary because the parameters are usually arranged in a way that leans itself towards leaving out the last parameter. An example where it is needed is where functions mimic the parameter order of the corresponding operator, e.g. subtract:
+// All the same
+List(1, 2, 3).map(x -> add(2, x));
+List(1, 2, 3).map(add(2, __)); // works but isn't idiomatic
+List(1, 2, 3).map(add(2)); // use this one instead
+// => [3, 4, 5]
 
-```java
-List(7, 8, 9).map(subtract(__, 2)); // [5, 6, 7]
+// The placeholder should only be used when necessary.
+List(7, 8, 9).map(subtract(__, 2));
+// => [5, 6, 7]
+
 ```
 
 ## Function composition
@@ -34,8 +52,15 @@ You can compose functions in two ways.
 Similiar to mathematical composition. This is a vararg function.
 
 ```java
-map(compose(add(1), multiply(2)), List(1, 2, 3));
+
+// classic Java
+map(add(1).compose(multiply(2)).compose(subtract(__, 1)), List(2, 3, 4));
 // => [3, 5, 7]
+
+// Ravr style
+map(compose(add(1), multiply(2), subtract(__, 1)), List(1, 2, 3));
+// => [3, 5, 7]
+
 ```
 
 ### Pipe
@@ -43,12 +68,19 @@ map(compose(add(1), multiply(2)), List(1, 2, 3));
 Same as compose, but with the order inverted. This can be more readable when putting functions on separate lines.
 
 ```java
-List("SIHT", "SI", "GNITSERETNI").map(pipe(
-	reverse(),
-	toLower(),
-	join(" ... ")
-));
-// => "this ... is ... interesting"
+
+List<String> words = List.of("xSIHTx", "xSIx", "xGNITSERETNIx");
+
+assertThat(
+	join("... ", words.map(pipe(
+		Ravr::reverse,
+		Ravr::toLower,
+		Ravr::init,
+		Ravr::tail
+	))),
+	is("this... is... interesting")
+);
+
 ```
 
 ## Functor, Applicative, Monad
@@ -82,9 +114,9 @@ class Thing implements Copyable<Thing> {
 }
 ```
 
-_Note that your IDE might tell you to replace the lamda with a method reference. This might not work because of reasons._
+_Note: Your IDE might tell you to replace the lamda with a method reference. This might not work because of reasons._
 
-You can create a lens using a pair of getters and setters and use it with get, set and over:
+You can create a lens using a pair of getters and setters. You can use the lens in combination with get, set and over:
 
 ```java
 Lens<Thing, String> name = lens(Thing::getName, Thing::setName);
@@ -108,7 +140,7 @@ get(quality, lookingGlass); // 5 (not changed)
 
 ## Other functions
 
-You can concatenate the content of a List<Option<X>> to List<X> with the catOptions function.
+You can concatenate the content of a List\<Option\<X\>\> to List\<X\> with the catOptions function.
 
 ```java
 List<String> strings = List(">>>>", "", "====");

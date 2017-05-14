@@ -456,13 +456,13 @@ public class Ravr {
     // Haskell
 
     public static <A>
-    List<A> catOptions(List<Option<A>> list) {
+    List<A> concatOptions(List<Option<A>> list) {
         return list.filter(Option::isDefined).map(Option::get);
     }
 
     public static <A>
-    Function1<List<Option<A>>, List<A>> catOptions() {
-        return Ravr::catOptions;
+    Function1<List<Option<A>>, List<A>> concatOptions() {
+        return Ravr::concatOptions;
     }
 
 }

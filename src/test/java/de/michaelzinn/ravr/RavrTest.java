@@ -381,10 +381,10 @@ public class RavrTest {
     // Haskell
 
     @Test
-    public void testCatOptions() {
+    public void testConcatOptions() {
 
         assertThat(
-                catOptions(List.of(Option.some("he"), Option.none(), Option.some("hm"))),
+                concatOptions(List.of(Option.some("he"), Option.none(), Option.some("hm"))),
                 is(List.of("he", "hm"))
         );
 
@@ -394,7 +394,7 @@ public class RavrTest {
         assertThat(
                 pipe(
                         map(removeFoo),
-                        catOptions()
+                        concatOptions()
                 ).apply(List.of("Hey", "foo", "keep")),
                 is(List.of("Hey", "keep"))
         );
