@@ -1,6 +1,7 @@
 package de.michaelzinn.ravr;
 
 import io.vavr.Function1;
+import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.control.Option;
 import io.vavr.control.Try;
@@ -378,6 +379,27 @@ public class RavrTest {
         );
     }
 
+
+    @Test
+    public void testZip() {
+        assertThat(
+                zip(List.of(1, 2, 3), List.of("one", "two", "three")),
+                is(List.of(
+                        new Tuple2(1, "one"),
+                        new Tuple2(2, "two"),
+                        new Tuple2(3, "three")
+                ))
+        );
+    }
+
+
+    @Test
+    public void testZipWith() {
+        assertThat(
+                zipWith(Ravr::add, List.of(1,2,3), List.of(4,5,6)),
+                is(List.of(5,7,9))
+        );
+    }
 
     // Haskell
 

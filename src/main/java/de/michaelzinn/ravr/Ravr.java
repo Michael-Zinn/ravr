@@ -1,6 +1,7 @@
 package de.michaelzinn.ravr;
 
 import io.vavr.Function1;
+import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.collection.Traversable;
 import io.vavr.control.Option;
@@ -10,6 +11,7 @@ import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 /**
@@ -26,6 +28,7 @@ public class Ravr {
     public static Function1<Integer, Integer> add(Integer x) {
         return y -> x + y;
     }
+
 
 
     public static <A, B>
@@ -452,6 +455,20 @@ public class Ravr {
         return s -> get(lens, s);
     }
 
+    public static <A, B>
+    List<Tuple2<A, B>> zip(List<A> a, List<B> b) {
+        return a.zip(b);
+    }
+
+    public static <A, B>
+    Function1<List<B>, List<Tuple2<A, B>>> zip(List<A> a) {
+        return b -> zip(a, b);
+    }
+
+    public static <T, U, R>
+    List<R> zipWith(BiFunction<T, U, R> biFunction, List<T> t, List<U> u) {
+        return t.zipWith(u, biFunction);
+    }
 
     // Haskell
 
