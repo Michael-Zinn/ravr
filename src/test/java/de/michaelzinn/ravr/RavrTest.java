@@ -128,6 +128,39 @@ public class RavrTest {
     }
 
 
+
+    @Test
+    public void testFlatMap() {
+        Function1<String, Option<Integer>> length = pipe(
+                String::length,
+                Option::some
+        );
+
+        assertThat(
+                flatMap(length, Option.some("hey")),
+                is(Option.some(3))
+        );
+        assertThat(
+                flatMapOption(length).apply(Option.some("hey")),
+                is(Option.some(3))
+        );
+
+
+        Function1<String, List<String>> twice = s -> List.of(s, s);
+
+        assertThat(
+                flatMap(twice, List.of("a", "b")),
+                is(List.of("a", "a", "b", "b"))
+        );
+
+        assertThat(
+                flatMapList(twice).apply(List.of("a", "b")),
+                is(List.of("a", "a", "b", "b"))
+        );
+
+    }
+
+
     @Test
     public void testHead() {
         assertThat(

@@ -131,6 +131,41 @@ public class Ravr {
     }
 
 
+    public static <A, B>
+    List<B> flatMap(Function1<A, List<B>> f, List<A> ma) {
+        return ma.flatMap(f);
+    }
+
+    /*
+    public static <A, B, T extends Traversable>
+    Function1<T, T> flatMap(Function1<A,T> f) {
+        return ma -> {
+            if(ma instanceof List) {
+                return (T) flatMap((Function1<A,List<B>>) f, (List<A>) ma);
+            } else if(ma instanceof Option) {
+                return (T) flatMap((Function1<A,Option<B>>) f, (Option<A>) ma);
+            }
+        }
+    }
+    */
+
+    public static <A, B>
+    Function1<List<A>, List<B>> flatMapList(Function1<A, List<B>> f) {
+        return ma -> flatMap(f, ma);
+    }
+
+    public static <A, B>
+    Option<B> flatMap(Function1<A, Option<B>> f, Option<A> ma) {
+        return ma.flatMap(f);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> flatMapOption(Function1<A, Option<B>> f) {
+        return ma -> flatMap(f, ma);
+    }
+
+
+
     public static <A>
     Option<A> head(List<A> list) {
         return list.headOption();
