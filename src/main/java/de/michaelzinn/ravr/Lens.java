@@ -1,10 +1,7 @@
 package de.michaelzinn.ravr;
 
-import javaslang.Function1;
-import javaslang.Function2;
-
+import io.vavr.Function1;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * Created by michael on 27.04.17.

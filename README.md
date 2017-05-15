@@ -2,6 +2,8 @@
 
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
+_v0.0.2 (very experimental)_
+
 ## Curried functions & partial function application
 
 Ravr provides two ways to do partial application: Either leave out parameters at the end or use a parameter placeholder:

@@ -1,8 +1,9 @@
 package de.michaelzinn.ravr;
 
-import javaslang.Function1;
-import javaslang.collection.List;
-import javaslang.control.Option;
+import io.vavr.Function1;
+import io.vavr.collection.List;
+import io.vavr.control.Option;
+import io.vavr.control.Try;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -218,7 +219,7 @@ public class RavrTest {
 
         @Override
         public Person copy() {
-            return safeClone(() -> clone());
+            return safeClone(Try.ofCallable(() -> clone()));
         }
     }
 

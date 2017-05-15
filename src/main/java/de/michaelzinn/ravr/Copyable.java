@@ -1,6 +1,7 @@
 package de.michaelzinn.ravr;
 
-import javaslang.control.Try;
+
+import io.vavr.control.Try;
 
 import java.util.function.Supplier;
 
@@ -12,7 +13,7 @@ import java.util.function.Supplier;
 public interface Copyable<Self extends Copyable<Self>> extends Cloneable {
 
 
-    default Self safeClone(Try.CheckedSupplier<Object> lambdaThatCallsClone) {
+    default Self safeClone(Try<Object> lambdaThatCallsClone) {
         try {
             return (Self) lambdaThatCallsClone.get();
         } catch(Throwable e) {

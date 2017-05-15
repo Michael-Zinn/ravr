@@ -1,9 +1,9 @@
 package de.michaelzinn.ravr;
 
-import javaslang.Function1;
-import javaslang.collection.List;
-import javaslang.collection.Traversable;
-import javaslang.control.Option;
+import io.vavr.Function1;
+import io.vavr.collection.List;
+import io.vavr.collection.Traversable;
+import io.vavr.control.Option;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
