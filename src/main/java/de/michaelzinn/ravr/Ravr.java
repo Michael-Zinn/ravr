@@ -374,6 +374,30 @@ public class Ravr {
         return a -> ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))));
     }
 
+    public static <A, B, C, D, E, F, G>
+    Function1<A, G> pipe(
+            Function1<A, B> ab,
+            Function1<B, C> bc,
+            Function1<C, D> cd,
+            Function1<D, E> de,
+            Function1<E, F> ef,
+            Function1<F, G> fg
+    ) {
+        return a -> fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H>
+    Function1<A, H> pipe(
+            Function1<A, B> ab,
+            Function1<B, C> bc,
+            Function1<C, D> cd,
+            Function1<D, E> de,
+            Function1<E, F> ef,
+            Function1<F, G> fg,
+            Function1<G, H> gh
+    ) {
+        return a -> gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))))));
+    }
 
     /**
      * Reverses the String. Currently breaks characters outside of the BMP.
