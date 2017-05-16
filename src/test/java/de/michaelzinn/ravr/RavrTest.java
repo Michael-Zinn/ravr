@@ -75,7 +75,7 @@ public class RavrTest {
 
         List<Integer> result = ap(fs, strings);
 
-        assertEquals(List.of(aLength, bLength, aHash, bHash), result);
+        assertThat(result, is(List.of(aLength, bLength, aHash, bHash)));
     }
 
     @Test
@@ -85,10 +85,10 @@ public class RavrTest {
         Option<String>
                 s = Option.some("hey");
 
-        assertEquals(Option.some(3), ap(f, s));
-        assertEquals(Option.none(), ap(Option.none(), s));
-        assertEquals(Option.none(), ap(f, Option.none()));
-        assertEquals(Option.none(), ap(Option.none(), Option.none()));
+        assertThat(ap(f, s), is(Option.some(3)));
+        assertThat(ap(Option.none(), s), is(Option.none()));
+        assertThat(ap(f, Option.none()), is(Option.none()));
+        assertThat(ap(Option.none(), Option.none()), is(Option.none()));
     }
 
 
@@ -459,6 +459,20 @@ public class RavrTest {
                 is(List.of(5,7,9))
         );
     }
+
+
+    // compromises
+
+    @Test
+    public void testNullTo() {
+        assertThat(nullTo("hey", "ho"), is("ho"));
+        assertThat(nullTo("hey", null), is("hey"));
+        assertThat(nullTo("hey").apply("ho"), is("ho"));
+        assertThat(nullTo("hey").apply(null), is("hey"));
+    }
+
+
+
 
     // Haskell
 

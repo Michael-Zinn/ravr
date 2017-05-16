@@ -552,6 +552,18 @@ public class Ravr {
         return t.zipWith(u, biFunction);
     }
 
+    // compromises
+
+    public static <T>
+    T nullTo(T fallback, T nullable) {
+        return nullable != null ? nullable : fallback;
+    }
+
+    public static <T>
+    Function1<T, T> nullTo(T fallback) {
+        return nullable -> nullTo(fallback, nullable);
+    }
+
     // Haskell
 
     public static <A>
