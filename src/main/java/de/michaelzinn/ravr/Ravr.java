@@ -492,6 +492,10 @@ public class Ravr {
         return value;
     }
 
+    public static <T> Function1<T, T> tap(Consumer<T> block) {
+        return value -> tap(block, value);
+    }
+
 
     public static String toLower(String s) {
         return s.toLowerCase();

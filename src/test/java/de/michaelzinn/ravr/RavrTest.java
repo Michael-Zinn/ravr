@@ -420,11 +420,16 @@ public class RavrTest {
     @Test
     public void testTap() {
         Ref<String> s = new Ref<>();
+        Ref<String> y = new Ref<>();
 
         String hey = tap(x -> s.t = x, "hey");
+        String yay = tap((String x) -> y.t = x).apply("yay");
 
         assertThat(hey, is("hey"));
         assertThat(s.t, is("hey"));
+
+        assertThat(yay, is("yay"));
+        assertThat(y.t, is("yay"));
 
 
     }
