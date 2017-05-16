@@ -1,6 +1,7 @@
 package de.michaelzinn.ravr;
 
 import io.vavr.Function1;
+import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.List;
 import io.vavr.control.Option;
@@ -89,6 +90,17 @@ public class RavrTest {
         assertThat(ap(Option.none(), s), is(Option.none()));
         assertThat(ap(f, Option.none()), is(Option.none()));
         assertThat(ap(Option.none(), Option.none()), is(Option.none()));
+    }
+
+
+    @Test
+    public void testApplyTuple() {
+        Tuple2<String, Integer> stuff = Tuple.of("a", 1);
+
+        assertThat(applyTuple((l, r) -> l + r, stuff), is("a1"));
+        assertThat(applyTuple(
+                (String l, Integer r) -> l + r
+        ).apply(stuff), is("a1"));
     }
 
 

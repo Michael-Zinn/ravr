@@ -51,6 +51,16 @@ public class Ravr {
     }
 
 
+    public static <L, R, T>
+    T applyTuple(BiFunction<L, R, T> f, Tuple2<L,R> tuple) {
+        return tuple.apply(f);
+    }
+
+    public static <L, R, T>
+    Function1<Tuple2<L,R>, T> applyTuple(BiFunction<L, R, T> f) {
+        return tuple -> applyTuple(f, tuple);
+    }
+
     public static <A>
     Predicate<A> complement(Predicate<A> predicate) {
         return a -> !predicate.test(a);
