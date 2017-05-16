@@ -8,6 +8,7 @@ import io.vavr.control.Option;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
@@ -495,6 +496,17 @@ public class Ravr {
     public static <T> Function1<T, T> tap(Consumer<T> block) {
         return value -> tap(block, value);
     }
+
+    public static <T> T tap(Runnable block, T value) {
+        block.run();
+        return value;
+    }
+
+    /* TODO make simpler to use
+    public static <T> Function1<T, T> tap(Runnable block) {
+        return value -> tap(block ,value);
+    }
+    */
 
 
     public static String toLower(String s) {

@@ -431,7 +431,11 @@ public class RavrTest {
         assertThat(yay, is("yay"));
         assertThat(y.t, is("yay"));
 
+        String very = tap(() -> s.t = "v", "very");
+        //String confusing = tap(() -> y.t = "c").apply("confusing");
 
+        assertThat(very, is("very"));
+        assertThat(s.t, is("v"));
     }
 
 
@@ -440,9 +444,9 @@ public class RavrTest {
         assertThat(
                 zip(List.of(1, 2, 3), List.of("one", "two", "three")),
                 is(List.of(
-                        new Tuple2(1, "one"),
-                        new Tuple2(2, "two"),
-                        new Tuple2(3, "three")
+                        new Tuple2<>(1, "one"),
+                        new Tuple2<>(2, "two"),
+                        new Tuple2<>(3, "three")
                 ))
         );
     }
