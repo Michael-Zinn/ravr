@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
@@ -483,6 +484,12 @@ public class Ravr {
 
     public static String tail(String string) {
         return string.substring(1);
+    }
+
+
+    public static <T> T tap(Consumer<T> block, T value) {
+        block.accept(value);
+        return value;
     }
 
 

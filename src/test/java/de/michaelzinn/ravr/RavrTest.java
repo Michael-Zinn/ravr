@@ -413,6 +413,23 @@ public class RavrTest {
     }
 
 
+    class Ref<T> {
+        public T t;
+    }
+
+    @Test
+    public void testTap() {
+        Ref<String> s = new Ref<>();
+
+        String hey = tap(x -> s.t = x, "hey");
+
+        assertThat(hey, is("hey"));
+        assertThat(s.t, is("hey"));
+
+
+    }
+
+
     @Test
     public void testZip() {
         assertThat(
