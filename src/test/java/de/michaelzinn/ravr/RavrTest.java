@@ -98,9 +98,7 @@ public class RavrTest {
         Tuple2<String, Integer> stuff = Tuple.of("a", 1);
 
         assertThat(applyTuple((l, r) -> l + r, stuff), is("a1"));
-        assertThat(applyTuple(
-                (String l, Integer r) -> l + r
-        ).apply(stuff), is("a1"));
+        assertThat(applyTuple((String l, Integer r) -> l + r).apply(stuff), is("a1"));
     }
 
 
@@ -138,7 +136,6 @@ public class RavrTest {
                 f.apply(List.of(1, 2, 3))
         );
     }
-
 
 
     @Test
@@ -467,8 +464,8 @@ public class RavrTest {
     @Test
     public void testZipWith() {
         assertThat(
-                zipWith(Ravr::add, List.of(1,2,3), List.of(4,5,6)),
-                is(List.of(5,7,9))
+                zipWith(Ravr::add, List.of(1, 2, 3), List.of(4, 5, 6)),
+                is(List.of(5, 7, 9))
         );
     }
 
@@ -482,8 +479,6 @@ public class RavrTest {
         assertThat(nullTo("hey").apply("ho"), is("ho"));
         assertThat(nullTo("hey").apply(null), is("hey"));
     }
-
-
 
 
     // Haskell
