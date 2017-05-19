@@ -17,8 +17,7 @@ import java.util.function.Predicate;
 import static de.michaelzinn.ravr.Placeholder.__;
 import static de.michaelzinn.ravr.Ravr.*;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * Created by michael on 16.04.17.
@@ -59,6 +58,26 @@ public class RavrTest {
     public void testAdd() {
         assertEquals((Integer) 3, Ravr.add(1, 2));
         assertEquals(List.of(2, 3, 4), List.of(1, 2, 3).map(Ravr.add(1)));
+    }
+
+
+    @Test
+    public void testAll() {
+        assertTrue(all(s -> s.length() == 1, List.of("a", "b")));
+        assertFalse(all(s -> s.length() == 1, List.of("a", "longer")));
+    }
+
+
+    @Test
+    public void testAlways() {
+        assertThat(always("a", 5), is("a"));
+        assertThat(always(5).apply("b"), is(5));
+    }
+
+    @Test
+    public void testAny() {
+        assertTrue(any(s -> s.length() == 1, List.of("a", "bee")));
+        assertFalse(any(s -> s.length() == 1, List.of("ey", "bee")));
     }
 
     @Test
@@ -103,6 +122,16 @@ public class RavrTest {
 
 
     @Test
+    public void testContains() {
+        List<String> ab = List.of("a", "b");
+        assertTrue(contains("a", ab));
+        assertTrue(contains("b").apply(ab));
+        assertFalse(contains("c", ab));
+        assertFalse(contains("d").apply(ab));
+    }
+
+
+    @Test
     public void testDefaultTo() {
 
         assertThat(defaultTo(5, Option.none()), is(5));
@@ -113,6 +142,16 @@ public class RavrTest {
                 is(List.of("y", "null"))
         );
 
+    }
+
+
+    @Test
+    public void testEq() {
+        assertTrue(eq("a", "a"));
+        assertTrue(eq("a").test("a"));
+
+        assertFalse(eq("a", 1));
+        assertFalse(eq("a").test("A"));
     }
 
 
@@ -137,6 +176,11 @@ public class RavrTest {
         );
     }
 
+    @Test
+    public void testFindIndex() {
+        assertThat(findIndex(eq(2), List.of(1,2,3)), is(1));
+        assertThat(findIndex(eq(2)).apply(List.of(1,2,3)), is(1));
+    }
 
     @Test
     public void testFlatMap() {
@@ -191,6 +235,28 @@ public class RavrTest {
                 head(""),
                 is(Option.none())
         );
+    }
+
+
+    @Test
+    public void testIfElse() {
+        assertThat(
+                ifElse(eq(5),
+                        always(1),
+                        always(2)
+                )
+                .apply(5),
+                is(1)
+        );
+
+        assertThat(
+                ifElse(eq(1),
+                        add(10),
+                        add(20),
+                        2),
+                is(22)
+        );
+
     }
 
 
@@ -381,6 +447,16 @@ public class RavrTest {
 
     }
 
+
+    @Test
+    public void testNone() {
+        List<String> abee = List.of("a", "bee");
+        assertTrue(none(s -> s.length() == 2, abee));
+        assertTrue(none((String s) -> s.length() == 2).apply(abee));
+
+        assertFalse(none(s -> s.length() == 1, abee));
+        assertFalse(none((String s) -> s.length() == 1).apply(abee));
+    }
 
     @Test
     public void testPipe() {

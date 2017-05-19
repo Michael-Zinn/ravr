@@ -56,3 +56,5 @@ fabric.properties
 *.iml
 target
 
+# vim
+.swo

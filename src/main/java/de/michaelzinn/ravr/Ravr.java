@@ -32,6 +32,39 @@ public class Ravr {
     }
 
 
+    public static <A>
+    boolean all(Predicate<A> predicate, List<A> list) {
+        return list.forAll(predicate);
+    }
+
+    public static <A>
+    Function1<List<A>, Boolean> all(Predicate<A> predicate) {
+        return list -> all(predicate, list);
+    }
+
+
+    public static <A, B>
+    A always(A a, B ignore) {
+        return a;
+    }
+
+    public static <A, B>
+    Function1<B, A> always(A a) {
+        return ignore -> a;
+    }
+
+
+    public static <A>
+    boolean any(Predicate<A> predicate, List<A> list) {
+        // TODO is there really no direct function for this in vavr?
+        return list.find(predicate).isDefined();
+    }
+
+    public static <A>
+    Function1<List<A>, Boolean> any(Predicate<A> predicate) {
+        return list -> any(predicate, list);
+    }
+
 
     public static <A, B>
     Option<B> ap(Option<Function1<A, B>> of, Option<A> oa) {
@@ -117,6 +150,17 @@ public class Ravr {
     }
 
     public static <A>
+    boolean contains(A a, List<A> list) {
+        return list.contains(a);
+    }
+
+    public static <A>
+    Function1<List<A>, Boolean> contains(A a) {
+        return list -> contains(a, list);
+    }
+
+
+    public static <A>
     A defaultTo(A a, Option<A> optionA) {
         return optionA.getOrElse(a);
     }
@@ -133,6 +177,17 @@ public class Ravr {
 
 
     public static <A>
+    boolean eq(A a1, A a2) {
+        return a1.equals(a2);
+    }
+
+    public static <A>
+    Predicate<A> eq(A a1) {
+        return a2 -> eq(a1, a2);
+    }
+
+
+    public static <A>
     List<A> filter(Predicate<A> p, List<A> list) {
         return list.filter(p);
     }
@@ -140,6 +195,17 @@ public class Ravr {
     public static <A>
     Function1<List<A>, List<A>> filter(Predicate<A> p) {
         return list -> list.filter(p);
+    }
+
+
+    public static <A>
+    int findIndex(Predicate<A> predicate, List<A> list) {
+        return list.indexWhere(predicate);
+    }
+
+    public static <A>
+    Function1<List<A>, Integer> findIndex(Predicate<A> predicate) {
+        return list -> list.indexWhere(predicate);
     }
 
 
@@ -316,6 +382,16 @@ public class Ravr {
         return b -> a * b;
     }
 
+
+    public static <A>
+    boolean none(Predicate<A> predicate, List<A> list) {
+        return list.find(predicate).isEmpty();
+    }
+
+    public static <A>
+    Function1<List<A>, Boolean> none(Predicate<A> predicate) {
+        return list -> none(predicate, list);
+    }
 
 
     public static <S extends Copyable<S>, A>
