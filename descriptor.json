@@ -1,7 +1,7 @@
 {
   "package": {
     "name": "ravr",
-    "repo": "maven",
+    "repo": "ravr",
     "subject": "rednifre",
     "desc": "Ramda for Java",
     "website_url": "https://github.com/RedNifre/ravr",
