@@ -1,0 +1,27 @@
+{
+  "package": {
+    "name": "ravr",
+    "repo": "maven",
+    "subject": "rednifre",
+    "desc": "Ramda for Java",
+    "website_url": "https://github.com/RedNifre/ravr",
+    "issue_tracker_url": "https://github.com/RedNifre/ravr/issues",
+    "vcs_url": "https://github.com/RedNifre/ravr",
+    "licenses": ["LGPLv3"],
+    "labels": ["functional programming"],
+    "public_download_numbers": false,
+    "public_stats": false
+  },
+ 
+  "version": {
+    "name": "0.0.2",
+    "released": "2017-05-21",
+    "gpgSign": false
+  },
+ 
+  "files":
+  [
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "de/michaelzinn/ravr/0.0.2/$1"}
+  ],
+  "publish": true
+}
