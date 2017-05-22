@@ -62,6 +62,19 @@ public class RavrTest {
 
 
     @Test
+    public void testAdjust() {
+        assertThat(
+                adjust(toUpper(), 1, List.of("a", "b", "c")),
+                is(List.of("a", "B", "c"))
+        );
+
+        assertThat(
+                adjust(toUpper(), 1).apply(List.of("a", "b", "c")),
+                is(List.of("a", "B", "c"))
+        );
+    }
+
+    @Test
     public void testAll() {
         assertTrue(all(s -> s.length() == 1, List.of("a", "b")));
         assertFalse(all(s -> s.length() == 1, List.of("a", "longer")));
@@ -215,6 +228,20 @@ public class RavrTest {
 
 
     @Test
+    public void testForEach() {
+        Ref<String> ref = new Ref<>();
+        ref.t = "before";
+
+        assertThat(
+                forEach(s -> ref.t = s, List.of("after")),
+                is(List.of("after"))
+        );
+
+        assertThat(ref.t, is("after"));
+    }
+
+
+    @Test
     public void testHead() {
         assertThat(
                 head(List.of("Hey", "ho")),
@@ -280,6 +307,20 @@ public class RavrTest {
         assertThat(
                 join(" ", List.of()),
                 is("")
+        );
+    }
+
+
+    @Test
+    public void testJoinOption() {
+        assertThat(
+                joinOption(" ", List.of("a", "b")),
+                is(Option.some("a b"))
+        );
+
+        assertThat(
+                joinOption(" ", List.of()),
+                is(Option.none())
         );
     }
 

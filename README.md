@@ -2,7 +2,7 @@
 
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
-_v0.0.2 (very experimental)_
+_v0.0.3 (experimental, incomplete)_
 
 ## Curried functions & partial function application
 
@@ -74,7 +74,7 @@ Monad   | bind          | chain      | flatMap   | Monad m => (a -> m b) -> m a 
 
 Due to limits in Java's type system these currently only work on Lists, Options, Traversables and Futures.
 
-## Lenses
+## Lenses (experimental)
 
 Lenses only work on types that implement the included Copyable interface, which is a simplified version of the Cloneable interface. The simplest way to implement it is wrapping the clone function:
 
@@ -137,6 +137,6 @@ Other Ramda functions will be added as needed. There probably needs to be a sepa
 
 ## Contributing
 
-The scope of this library is to port Ramda. Extra functions like catOptions should be the exception. Contact me on [Twitter](https://twitter.com/rednifre).
+The scope of this library is to port Ramda. Extra functions like concatOptions should be the exception. Contact me on [Twitter](https://twitter.com/rednifre).
 
 Licensed under the LGPL v3, see the LICENSE file for details.

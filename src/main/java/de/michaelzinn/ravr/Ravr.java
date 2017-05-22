@@ -8,6 +8,7 @@ import io.vavr.control.Option;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
@@ -30,6 +31,16 @@ public class Ravr {
         return y -> x + y;
     }
 
+
+    public static <A>
+    List<A> adjust(Function1<A,A> f, int index, List<A> list) {
+        return list.update(index, f);
+    }
+
+    public static <A>
+    Function1<List<A>, List<A>> adjust(Function1<A,A> f, int index) {
+        return list -> adjust(f, index, list);
+    }
 
     public static <A>
     boolean all(Predicate<A> predicate, List<A> list) {
@@ -242,6 +253,13 @@ public class Ravr {
     }
 
 
+    public static <A>
+    List<A> forEach(Consumer<A> consumer, List<A> list) {
+        list.forEach(consumer);
+        return list;
+    }
+
+
 
     public static <A>
     Option<A> head(List<A> list) {
@@ -268,6 +286,28 @@ public class Ravr {
         return string.substring(0, string.length() - 1);
     }
 
+
+    public static <A>
+    boolean isNone(Option<A> any) {
+        return any.isEmpty();
+    }
+
+    public static <A>
+    Predicate<Option<A>> isNone() {
+        return Option::isEmpty;
+    }
+
+    public static <A>
+    boolean isSome(Option<A> any) {
+        return any.isDefined();
+    }
+
+    public static <A>
+    Predicate<Option<A>> isSome() {
+        return Option::isDefined;
+    }
+
+
     public static <A>
     String join(String joiner, List<A> list) {
         return list
@@ -279,6 +319,19 @@ public class Ravr {
     public static <A>
     Function1<List<A>, String> join(String joiner) {
         return list -> join(joiner, list);
+    }
+
+
+    public static <A>
+    Option<String> joinOption(String joiner, List<A> list) {
+        return list
+                .map(Object::toString)
+                .reduceOption((l, r) -> l + joiner + r);
+    }
+
+    public static <A>
+    Function1<List<A>, Option<String>> joinOption(String joiner) {
+        return list -> joinOption(joiner, list);
     }
 
 
