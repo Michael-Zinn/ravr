@@ -21,7 +21,7 @@
  
   "files":
   [
-    {"includePattern": "build/libs/(.*)", "uploadPattern": "de/michaelzinn/ravr/0.0.2/$1"}
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "de/michaelzinn/ravr/ravr/0.0.2/$1"}
   ],
   "publish": true
 }
