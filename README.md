@@ -4,6 +4,39 @@ This is a partial port of the [Ramda.js functional programming library](http://r
 
 _v0.0.3 (experimental, incomplete)_
 
+## Adding it to your project
+
+### Maven
+
+It's not on Maven Central yet, but you can [find it in JCenter](https://bintray.com/rednifre/ravr/ravr). First, add JCenter to the repositories in your pom:
+
+```xml
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <url>http://jcenter.bintray.com </url>
+        </repository>
+    </repositories>
+```
+
+Then you can import it as usual:
+
+```xml
+    <dependencies>
+        <dependency>
+            <groupId>de.michaelzinn.ravr</groupId>
+            <artifactId>ravr</artifactId>
+            <version>0.0.3</version>
+        </dependency>
+    </dependencies>
+```
+
+### Gradle
+
+```gradle
+compile 'de.michaelzinn.ravr:ravr:0.0.3'
+```
+
 ## Curried functions & partial function application
 
 Ravr provides two ways to do partial application: Either leave out parameters at the end or use a parameter placeholder:
@@ -17,7 +50,7 @@ List.of(1, 2, 3).map(add(2)); // use this one instead
 // => [3, 4, 5]
 
 // The placeholder should only be used when necessary.
-List(7, 8, 9).map(subtract(__, 2));
+List.of(7, 8, 9).map(subtract(__, 2));
 // => [5, 6, 7]
 
 ```
