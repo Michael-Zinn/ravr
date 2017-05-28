@@ -2,6 +2,7 @@ package de.michaelzinn.ravr;
 
 import io.vavr.*;
 import io.vavr.collection.List;
+import io.vavr.collection.Map;
 import io.vavr.collection.Traversable;
 import io.vavr.control.Option;
 
@@ -149,6 +150,10 @@ public class Ravr {
         return lens.getter.apply(s);
     }
 
+    public static <A, B>
+    Map<B, List<A>> groupBy(Function<? super A, ? extends B> classifier, List<A> list) {
+        return list.groupBy(classifier);
+    }
 
     public static <A>
     Option<A> head(List<A> list) {
@@ -1253,6 +1258,42 @@ public class Ravr {
     }
 
 
+    public static <A, B>
+    Function1<Function<? super A, ? extends B>, Map<B, List<A>>> groupBy(Placeholder _classifier, List<A> list) {
+        return (classifier) -> groupBy(classifier, list);
+    }
+
+
+    public static <A, B>
+    Function1<List<A>, Map<B, List<A>>> groupBy(Function<? super A, ? extends B> classifier, Placeholder _list) {
+        return (list) -> groupBy(classifier, list);
+    }
+
+
+    public static <A, B>
+    Function2<Function<? super A, ? extends B>, List<A>, Map<B, List<A>>> groupBy(Placeholder _classifier, Placeholder _list) {
+        return Ravr::groupBy;
+    }
+
+
+    public static <A, B>
+    Function1<List<A>, Map<B, List<A>>> groupBy(Function<? super A, ? extends B> classifier) {
+        return (list) -> groupBy(classifier, list);
+    }
+
+
+    public static <A, B>
+    Function2<Function<? super A, ? extends B>, List<A>, Map<B, List<A>>> groupBy(Placeholder _classifier) {
+        return Ravr::groupBy;
+    }
+
+
+    public static <A, B>
+    Function2<Function<? super A, ? extends B>, List<A>, Map<B, List<A>>> groupBy() {
+        return Ravr::groupBy;
+    }
+
+
     public static <A>
     Function1<List<A>, Option<A>> head(Placeholder _list) {
         return Ravr::head;
@@ -1988,12 +2029,6 @@ public class Ravr {
 
 
     public static <T>
-    Function2<T, T, T> nullTo(Placeholder _fallback, Placeholder _nullable) {
-        return Ravr::nullTo;
-    }
-
-
-    public static <T>
     Function1<T, T> nullTo(T fallback) {
         return (nullable) -> nullTo(fallback, nullable);
     }
@@ -2009,6 +2044,5 @@ public class Ravr {
     Function2<T, T, T> nullTo() {
         return Ravr::nullTo;
     }
-
 
 }
