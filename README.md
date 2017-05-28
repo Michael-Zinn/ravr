@@ -2,7 +2,7 @@
 
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
-_v0.0.3 (experimental, incomplete)_
+_v0.0.4 (experimental, incomplete)_
 
 ## Adding it to your project
 
@@ -164,9 +164,281 @@ pipe(
 ).apply(strings);
 ```
 
+## What's included exactly
+
+| Icon | Meaning |
+|:----:|:--------|
+| :white_check_mark: | Works |
+| :neutral_face: | Works with issues |
+|    | Not implemented |
+| :heavy_multiplication_x: | Not planned |
+| :diamond_shape_with_a_dot_inside: | Bonus function not originally included in Ramda.js |
+
+.
+
+| Status | Function | Note |
+|:----:|:--------|:-----|
+| :white_check_mark: | add | |
+|    | addIndex |   |
+| :white_check_mark: | adjust | |
+| :white_check_mark: | all | |
+|    | allPass |   |
+| :white_check_mark: | always | |
+|    | and |   |
+| :white_check_mark: | any | |
+|    | anyPass |   |
+| :neutral_face: | ap | Only works on Lists.|
+|    | aperture |   |
+|    | append |   |
+|    | apply |   |
+|    | applySpec |   |
+| :neutral_face: | applyTuple | Only works on Tuples of size 2. Will be fixed.|
+|    | ascend |   |
+|    | assoc |   |
+| :heavy_multiplication_x: | assocPath |   |
+|    | binary |   |
+|    | bind |   |
+|    | both |   |
+|    | call |   |
+|    | chain |   |
+|    | clamp |   |
+| :heavy_multiplication_x: | clone |   |
+|    | comparator |   |
+| :white_check_mark: | complement | |
+|    | compose |   |
+|    | composeK |   |
+|    | composeP |   |
+| :white_check_mark: | concat | |
+| :diamond_shape_with_a_dot_inside: | concatOptions | |
+|    | cond |   |
+|    | construct |   |
+|    | constructN |   |
+| :white_check_mark: | contains | |
+|    | converge |   |
+|    | countBy |   |
+|    | curry |   |
+|    | curryN |   |
+|    | dec |   |
+| :white_check_mark: | defaultTo | |
+|    | descend |   |
+|    | difference |   |
+|    | differenceWith |   |
+|    | dissoc |   |
+|    | dissocPath |   |
+|    | divide |   |
+|    | drop |   |
+|    | dropLast |   |
+|    | dropLastWhile |   |
+|    | dropRepeats |   |
+|    | dropRepeatsWith |   |
+|    | dropWhile |   |
+|    | either |   |
+|    | empty |   |
+|    | endsWith |   |
+| :white_check_mark: | eq | |
+|    | eqBy |   |
+|    | eqProps |   |
+|    | equals |   |
+|    | evolve |   |
+|    | F |   |
+| :white_check_mark: | filter | |
+|    | find |   |
+| :white_check_mark: | findIndex | |
+|    | findLast |   |
+|    | findLastIndex |   |
+| :neutral_face: | flatMap | Only for lists?|
+|    | flatten |   |
+|    | flip |   |
+| :white_check_mark: | forEach | |
+|    | forEachObjIndexed |   |
+|    | fromPairs |   |
+| :white_check_mark: | get | |
+|    | groupBy |   |
+|    | groupWith |   |
+|    | gt |   |
+|    | gte |   |
+|    | has |   |
+|    | hasIn |   |
+| :white_check_mark: | head | |
+|    | identical |   |
+|    | identity |   |
+| :white_check_mark: | ifElse | |
+|    | inc |   |
+|    | indexBy |   |
+|    | indexOf |   |
+|    | init |   |
+|    | innerJoin |   |
+|    | insert |   |
+|    | insertAll |   |
+|    | intersection |   |
+|    | intersectionWith |   |
+|    | intersperse |   |
+|    | into |   |
+|    | invert |   |
+|    | invertObj |   |
+|    | invoker |   |
+|    | is |   |
+|    | isEmpty |   |
+|    | isNil |   |
+| :white_check_mark: | isNone | |
+| :white_check_mark: | isSome | |
+| :white_check_mark: | join | |
+| :diamond_shape_with_a_dot_inside: | joinOption | Like join, except that it returns nothing when joining empty lists.|
+|    | juxt |   |
+|    | keys |   |
+|    | keysIn |   |
+|    | last |   |
+|    | lastIndexOf |   |
+|    | length |   |
+| :white_check_mark: | lens | |
+|    | lensIndex |   |
+|    | lensPath |   |
+|    | lensProp |   |
+|    | lift |   |
+|    | liftN |   |
+|    | lt |   |
+|    | lte |   |
+| :white_check_mark: | map | |
+|    | mapAccum |   |
+|    | mapAccumRight |   |
+|    | mapObjIndexed |   |
+|    | match |   |
+|    | mathMod |   |
+|    | max |   |
+|    | maxBy |   |
+|    | mean |   |
+|    | median |   |
+|    | memoize |   |
+|    | memoizeWith |   |
+|    | merge |   |
+|    | mergeAll |   |
+|    | mergeDeepLeft |   |
+|    | mergeDeepRight |   |
+|    | mergeDeepWith |   |
+|    | mergeDeepWithKey |   |
+|    | mergeWith |   |
+|    | mergeWithKey |   |
+|    | min |   |
+|    | minBy |   |
+|    | modulo |   |
+|    | multiply |   |
+|    | nAry |   |
+|    | negate |   |
+| :white_check_mark: | none | |
+|    | not |   |
+|    | nth |   |
+|    | nthArg |   |
+| :white_check_mark: | nullTo | |
+|    | o |   |
+|    | objOf |   |
+|    | of |   |
+|    | omit |   |
+|    | once |   |
+|    | or |   |
+| :white_check_mark: | over | |
+|    | pair |   |
+|    | partial |   |
+|    | partialRight |   |
+|    | partition |   |
+|    | path |   |
+|    | pathEq |   |
+|    | pathOr |   |
+|    | pathSatisfies |   |
+|    | pick |   |
+|    | pickAll |   |
+|    | pickBy |   |
+|    | pipe |   |
+|    | pipeK |   |
+|    | pipeP |   |
+|    | pluck |   |
+|    | prepend |   |
+|    | product |   |
+|    | project |   |
+|    | prop |   |
+|    | propEq |   |
+|    | propIs |   |
+|    | propOr |   |
+|    | props |   |
+|    | propSatisfies |   |
+|    | range |   |
+|    | reduce |   |
+|    | reduceBy |   |
+|    | reduced |   |
+|    | reduceRight |   |
+|    | reduceWhile |   |
+|    | reject |   |
+|    | remove |   |
+|    | repeat |   |
+|    | replace |   |
+| :white_check_mark: | reverse | |
+|    | scan |   |
+|    | sequence |   |
+| :white_check_mark: | set | |
+|    | slice |   |
+|    | sort |   |
+|    | sortBy |   |
+|    | sortWith |   |
+|    | split |   |
+|    | splitAt |   |
+|    | splitEvery |   |
+|    | splitWhen |   |
+|    | startsWith |   |
+|    | subtract |   |
+|    | sum |   |
+|    | symmetricDifference |   |
+|    | symmetricDifferenceWith |   |
+|    | T |   |
+| :white_check_mark: | tail | |
+|    | take |   |
+|    | takeLast |   |
+|    | takeLastWhile |   |
+|    | takeWhile |   |
+|    | tap |   |
+|    | test |   |
+|    | times |   |
+| :white_check_mark: | toLower | |
+|    | toPairs |   |
+|    | toPairsIn |   |
+|    | toString |   |
+| :white_check_mark: | toUpper | |
+|    | transduce |   |
+|    | transpose |   |
+|    | traverse |   |
+|    | trim |   |
+|    | tryCatch |   |
+| :heavy_multiplication_x: | type |   |
+|    | unapply |   |
+|    | unary |   |
+|    | uncurryN |   |
+|    | unfold |   |
+|    | union |   |
+|    | unionWith |   |
+|    | uniq |   |
+|    | uniqBy |   |
+|    | uniqWith |   |
+|    | unless |   |
+|    | unnest |   |
+|    | until |   |
+|    | update |   |
+|    | useWith |   |
+|    | values |   |
+|    | valuesIn |   |
+|    | view |   |
+|    | when |   |
+|    | where |   |
+|    | whereEq |   |
+|    | without |   |
+|    | xprod |   |
+| :white_check_mark: | zip | |
+|    | zipObj |   |
+| :white_check_mark: | zipWith | |
+|    | _isArrayLike |   |
+
+
+
 ## Future plans
 
-Other Ramda functions will be added as needed. There probably needs to be a separate project for code generation for the parameter placeholder invocations.
+Other Ramda functions will be added as needed. 
 
 ## Contributing
 
