@@ -2,7 +2,7 @@
 
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
-_v0.0.4 (experimental, incomplete)_
+_v0.0.5 (experimental, incomplete)_
 
 ## Adding it to your project
 
@@ -26,7 +26,7 @@ Then you can import it as usual:
         <dependency>
             <groupId>de.michaelzinn.ravr</groupId>
             <artifactId>ravr</artifactId>
-            <version>0.0.3</version>
+            <version>0.0.5</version>
         </dependency>
     </dependencies>
 ```
@@ -34,7 +34,7 @@ Then you can import it as usual:
 ### Gradle
 
 ```gradle
-compile 'de.michaelzinn.ravr:ravr:0.0.3'
+compile 'de.michaelzinn.ravr:ravr:0.0.5'
 ```
 
 ## Curried functions & partial function application
@@ -164,7 +164,7 @@ pipe(
 ).apply(strings);
 ```
 
-## What's included exactly
+## What's included
 
 | Icon | Meaning |
 |:----:|:--------|
@@ -174,7 +174,7 @@ pipe(
 | :heavy_multiplication_x: | Not planned |
 | :diamond_shape_with_a_dot_inside: | Bonus function not originally included in Ramda.js |
 
-.
+This list is generated automatically and slightly inaccurate right now.
 
 | Status | Function | Note |
 |:----:|:--------|:-----|
@@ -192,7 +192,7 @@ pipe(
 |    | append |   |
 |    | apply |   |
 |    | applySpec |   |
-| :neutral_face: | applyTuple | Only works on Tuples of size 2. Will be fixed.|
+| :neutral_face: | applyTuple | Only works on Tuples of size 2 and 3. Will be fixed.|
 |    | ascend |   |
 |    | assoc |   |
 | :heavy_multiplication_x: | assocPath |   |
@@ -215,6 +215,7 @@ pipe(
 |    | constructN |   |
 | :white_check_mark: | contains | |
 |    | converge |   |
+| :diamond_shape_with_a_dot_inside: | count | |
 |    | countBy |   |
 |    | curry |   |
 |    | curryN |   |
@@ -253,7 +254,7 @@ pipe(
 |    | forEachObjIndexed |   |
 |    | fromPairs |   |
 | :white_check_mark: | get | |
-|    | groupBy |   |
+| :white_check_mark: | groupBy | |
 |    | groupWith |   |
 |    | gt |   |
 |    | gte |   |
@@ -261,7 +262,7 @@ pipe(
 |    | hasIn |   |
 | :white_check_mark: | head | |
 |    | identical |   |
-|    | identity |   |
+| :white_check_mark: | identity | |
 | :white_check_mark: | ifElse | |
 |    | inc |   |
 |    | indexBy |   |
@@ -280,8 +281,8 @@ pipe(
 |    | is |   |
 |    | isEmpty |   |
 |    | isNil |   |
-| :white_check_mark: | isNone | |
-| :white_check_mark: | isSome | |
+| :white_check_mark: | isNone | Replacement for isNil, returns true for Option.none().|
+| :white_check_mark: | isSome | Replacement for complement(isNil), returns true for Option.some("whatever").|
 | :white_check_mark: | join | |
 | :diamond_shape_with_a_dot_inside: | joinOption | Like join, except that it returns nothing when joining empty lists.|
 |    | juxt |   |
@@ -325,7 +326,7 @@ pipe(
 |    | nAry |   |
 |    | negate |   |
 | :white_check_mark: | none | |
-|    | not |   |
+| :white_check_mark: | not | |
 |    | nth |   |
 |    | nthArg |   |
 | :white_check_mark: | nullTo | |
@@ -433,8 +434,6 @@ pipe(
 |    | zipObj |   |
 | :white_check_mark: | zipWith | |
 |    | _isArrayLike |   |
-
-
 
 ## Future plans
 

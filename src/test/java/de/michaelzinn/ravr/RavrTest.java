@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static de.michaelzinn.ravr.Placeholder.__;
@@ -104,7 +105,7 @@ public class RavrTest {
         Integer bLength = 3;
         Integer bHash = b.hashCode();
 
-        List<Function1<String, Integer>> fs = List.of(String::length, String::hashCode);
+        List<Function<String, Integer>> fs = List.of(String::length, String::hashCode);
         List<String> strings = List.of(a, b);
 
         List<Integer> result = ap(fs, strings);
@@ -114,7 +115,7 @@ public class RavrTest {
 
     @Test
     public void apOption() {
-        Option<Function1<String, Integer>>
+        Option<Function<String, Integer>>
                 f = Option.some(String::length);
         Option<String>
                 s = Option.some("hey");
@@ -179,7 +180,7 @@ public class RavrTest {
                 filter(isEven, List.range(1, 5))
         );
 
-        Function1<List<Integer>, String> f = pipe(
+        Function<List<Integer>, String> f = pipe(
                 filter(complement(isEven)),
                 join("")
         );
@@ -198,7 +199,7 @@ public class RavrTest {
 
     @Test
     public void testFlatMap() {
-        Function1<String, Option<Integer>> length = pipe(
+        Function<String, Option<Integer>> length = pipe(
                 String::length,
                 Option::some
         );
