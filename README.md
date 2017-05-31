@@ -2,7 +2,7 @@
 
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
-_v0.0.7 (experimental, incomplete)_
+_v0.0.8 (experimental, incomplete)_
 
 ## Adding it to your project
 
@@ -26,7 +26,7 @@ Then you can import it as usual:
         <dependency>
             <groupId>de.michaelzinn.ravr</groupId>
             <artifactId>ravr</artifactId>
-            <version>0.0.7</version>
+            <version>0.0.8</version>
         </dependency>
     </dependencies>
 ```
@@ -34,7 +34,7 @@ Then you can import it as usual:
 ### Gradle
 
 ```gradle
-compile 'de.michaelzinn.ravr:ravr:0.0.7'
+compile 'de.michaelzinn.ravr:ravr:0.0.8'
 ```
 
 ## Curried functions & partial function application
