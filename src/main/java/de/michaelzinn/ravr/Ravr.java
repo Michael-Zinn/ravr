@@ -84,6 +84,17 @@ public class Ravr {
     }
 
     public static <A>
+    List<A> concatOptions(List<Option<A>> list) {
+        return list.filter(Option::isDefined).map(Option::get);
+    }
+
+    // TODO hotfix, because this doesn't get generated right now
+    public static <A>
+    Function<List<Option<A>>, List<A>> concatOptions() {
+        return Ravr::concatOptions;
+    }
+
+    public static <A>
     boolean contains(A a, List<A> list) {
         return list.contains(a);
     }
@@ -357,13 +368,6 @@ public class Ravr {
     public static <T, U, R>
     List<R> zipWith(BiFunction<T, U, R> biFunction, List<T> t, List<U> u) {
         return t.zipWith(u, biFunction);
-    }
-
-    // Haskell
-
-    public static <A>
-    List<A> concatOptions(List<Option<A>> list) {
-        return list.filter(Option::isDefined).map(Option::get);
     }
 
 
@@ -763,9 +767,7 @@ public class Ravr {
         return jk.apply(ij.apply(hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))))))));
     }
 
-
-// PARTIAL APPLICATIONS ////////////////////////////////////////////////////////////////////////////////////////////////
-
+    // PARTIAL APPLICATIONS ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public static Function1<Integer, Integer> add(Placeholder _x, Integer y) {
         return (x) -> add(x, y);
@@ -1914,6 +1916,5 @@ public class Ravr {
     Function3<BiFunction<T, U, R>, List<T>, List<U>, List<R>> zipWith() {
         return Ravr::zipWith;
     }
-
 
 }

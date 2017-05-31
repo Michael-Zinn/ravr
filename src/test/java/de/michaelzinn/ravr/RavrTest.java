@@ -624,7 +624,7 @@ public class RavrTest {
         assertThat(
                 pipe(
                         (List<String> x) -> map(removeFoo, x),
-                        y -> concatOptions(y)
+                        concatOptions()
                 ).apply(List.of("Hey", "foo", "keep")),
                 is(List.of("Hey", "keep"))
         );
