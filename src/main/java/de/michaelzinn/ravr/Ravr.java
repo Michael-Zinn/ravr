@@ -8,7 +8,6 @@ import io.vavr.control.Option;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.*;
@@ -56,7 +55,7 @@ public class Ravr {
         return (List<B>) ap((Traversable) fs, (Traversable) as);
     }
 
-    public static <A, B, T extends Traversable>
+    private static <A, B, T extends Traversable>
     T ap(T afxy, T ax) {
         Traversable<Function<A, B>> fs = (Traversable<Function<A, B>>) afxy;
         Traversable<A> xs = (Traversable<A>) ax;
