@@ -85,6 +85,22 @@ public class Ravr {
     }
 
     public static <A>
+    String concat(String string1, String string2) {
+        return string1 + string2;
+    }
+
+    public static <A>
+    List<A> concatOptions(List<Option<A>> list) {
+        return list.filter(Option::isDefined).map(Option::get);
+    }
+
+    // TODO hotfix, because this doesn't get generated right now
+    public static <A>
+    Function<List<Option<A>>, List<A>> concatOptions() {
+        return Ravr::concatOptions;
+    }
+
+    public static <A>
     boolean contains(A a, List<A> list) {
         return list.contains(a);
     }
@@ -316,6 +332,11 @@ public class Ravr {
         return copy;
     }
 
+    public static <A, C extends Comparable<? super C>>
+    List<A> sortBy(Function<? super A, ? extends C> by, List<A> list) {
+        return list.sortBy(by);
+    }
+
     public static Integer subtract(Integer x, Integer y) {
         return x - y;
     }
@@ -350,6 +371,11 @@ public class Ravr {
         return s.toUpperCase();
     }
 
+    public static <A>
+    List<A> without(List<A> remove, List<A> list) {
+        return list.removeAll(remove);
+    }
+
     public static <A, B>
     List<Tuple2<A, B>> zip(List<A> a, List<B> b) {
         return a.zip(b);
@@ -358,13 +384,6 @@ public class Ravr {
     public static <T, U, R>
     List<R> zipWith(BiFunction<T, U, R> biFunction, List<T> t, List<U> u) {
         return t.zipWith(u, biFunction);
-    }
-
-    // Haskell
-
-    public static <A>
-    List<A> concatOptions(List<Option<A>> list) {
-        return list.filter(Option::isDefined).map(Option::get);
     }
 
 
@@ -619,13 +638,11 @@ public class Ravr {
 
 // DO_WITH /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void doWith() {
-    } // ;)
-
     public static <A>
     A doWith(
             A a
-    ) {
+
+            ) {
         return a;
     }
 
@@ -766,7 +783,6 @@ public class Ravr {
 
 
 // PARTIAL APPLICATIONS ////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     public static Function1<Integer, Integer> add(Placeholder _x, Integer y) {
         return (x) -> add(x, y);
