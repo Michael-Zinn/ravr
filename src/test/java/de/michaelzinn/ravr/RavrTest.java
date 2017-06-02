@@ -180,8 +180,9 @@ public class RavrTest {
                 filter(isEven, List.range(1, 5))
         );
 
-        Function<List<Integer>, String> f = pipe(
-                filter(complement(isEven)),
+        Function<List<Integer>, String> f = (Function<List<Integer>, String>) pipe(
+                (Function<List<Integer>, List<Integer>>) filter(complement(isEven)),
+                map(x -> x.toString()),
                 join("")
         );
 
@@ -567,7 +568,7 @@ public class RavrTest {
         assertThat(yay, is("yay"));
         assertThat(y.t, is("yay"));
 
-        String very = tap(() -> s.t = "v", "very");
+        String very = tap((egal) -> s.t = "v", "very");
         //String confusing = tap(() -> y.t = "c").apply("confusing");
 
         assertThat(very, is("very"));

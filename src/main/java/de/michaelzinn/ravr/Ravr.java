@@ -4,6 +4,7 @@ import io.vavr.*;
 import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import io.vavr.collection.Traversable;
+import io.vavr.control.Either;
 import io.vavr.control.Option;
 
 import java.math.BigDecimal;
@@ -109,6 +110,10 @@ public class Ravr {
         return list.count(predicate);
     }
 
+    public static Integer dec(Integer x) {
+        return --x;
+    }
+
     public static <A>
     A defaultTo(A a, Option<A> optionA) {
         return optionA.getOrElse(a);
@@ -195,10 +200,13 @@ public class Ravr {
         return predicate.test(value) ? then.apply(value) : els.apply(value);
     }
 
+    public static Integer inc(Integer x) {
+        return ++x;
+    }
+
     public static String init(String string) {
         return string.substring(0, string.length() - 1);
     }
-
 
     public static <A>
     boolean isNone(Option<A> any) {
@@ -235,6 +243,21 @@ public class Ravr {
     public static <A, B>
     List<B> map(Function<A, B> f, List<A> value) {
         return value.map(f);
+    }
+
+    public static <A, B>
+    Option<B> map_Option(Function<A, B> f, Option<A> value) {
+        return value.map(f);
+    }
+
+    public static <L, R, Z>
+    Either<L, Z> map_Either(Function<R, Z> f, Either<L, R> either) {
+        return either.map(f);
+    }
+
+    public static <L, R, Z>
+    Either<Z, R> map_Either_left(Function<L, Z> f, Either<L, R> either) {
+        return either.mapLeft(f);
     }
 
     public static Integer modulo(Integer a, Integer n) {
@@ -353,6 +376,7 @@ public class Ravr {
         return value -> tap(block, value);
     }
 
+    /*
     public static <T> T tap(Runnable block, T value) {
         block.run();
         return value;
@@ -361,6 +385,7 @@ public class Ravr {
     public static <T> Function<T, T> tap(Runnable block) {
         return value -> tap(block, value);
     }
+    */
 
     public static String toLower(String s) {
         return s.toLowerCase();
@@ -386,401 +411,8 @@ public class Ravr {
     }
 
 
-    // COMPOSE /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static <A>
-    Function<A, A> compose(
-
-    ) {
-        return a -> a;
-    }
-
-    public static <A, B>
-    Function<A, B> compose(
-            Function<A, B> ab
-    ) {
-        return a -> ab.apply(a);
-    }
-
-    public static <A, B, C>
-    Function<A, C> compose(
-            Function<B, C> bc,
-            Function<A, B> ab
-    ) {
-        return a -> bc.apply(ab.apply(a));
-    }
-
-    public static <A, B, C, D>
-    Function<A, D> compose(
-            Function<C, D> cd,
-            Function<B, C> bc,
-            Function<A, B> ab
-    ) {
-        return a -> cd.apply(bc.apply(ab.apply(a)));
-    }
-
-    public static <A, B, C, D, E>
-    Function<A, E> compose(
-            Function<D, E> de,
-            Function<C, D> cd,
-            Function<B, C> bc,
-            Function<A, B> ab
-    ) {
-        return a -> de.apply(cd.apply(bc.apply(ab.apply(a))));
-    }
-
-    public static <A, B, C, D, E, F>
-    Function<A, F> compose(
-            Function<E, F> ef,
-            Function<D, E> de,
-            Function<C, D> cd,
-            Function<B, C> bc,
-            Function<A, B> ab
-    ) {
-        return a -> ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))));
-    }
-
-    public static <A, B, C, D, E, F, G>
-    Function<A, G> compose(
-            Function<F, G> fg,
-            Function<E, F> ef,
-            Function<D, E> de,
-            Function<C, D> cd,
-            Function<B, C> bc,
-            Function<A, B> ab
-    ) {
-        return a -> fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))));
-    }
-
-    public static <A, B, C, D, E, F, G, H>
-    Function<A, H> compose(
-            Function<G, H> gh,
-            Function<F, G> fg,
-            Function<E, F> ef,
-            Function<D, E> de,
-            Function<C, D> cd,
-            Function<B, C> bc,
-            Function<A, B> ab
-    ) {
-        return a -> gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))))));
-    }
-
-    public static <A, B, C, D, E, F, G, H, I>
-    Function<A, I> compose(
-            Function<H, I> hi,
-            Function<G, H> gh,
-            Function<F, G> fg,
-            Function<E, F> ef,
-            Function<D, E> de,
-            Function<C, D> cd,
-            Function<B, C> bc,
-            Function<A, B> ab
-    ) {
-        return a -> hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))))));
-    }
-
-    public static <A, B, C, D, E, F, G, H, I, J>
-    Function<A, J> compose(
-            Function<I, J> ij,
-            Function<H, I> hi,
-            Function<G, H> gh,
-            Function<F, G> fg,
-            Function<E, F> ef,
-            Function<D, E> de,
-            Function<C, D> cd,
-            Function<B, C> bc,
-            Function<A, B> ab
-    ) {
-        return a -> ij.apply(hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))))))));
-    }
-
-    public static <A, B, C, D, E, F, G, H, I, J, K>
-    Function<A, K> compose(
-            Function<J, K> jk,
-            Function<I, J> ij,
-            Function<H, I> hi,
-            Function<G, H> gh,
-            Function<F, G> fg,
-            Function<E, F> ef,
-            Function<D, E> de,
-            Function<C, D> cd,
-            Function<B, C> bc,
-            Function<A, B> ab
-    ) {
-        return a -> jk.apply(ij.apply(hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))))))));
-    }
-
-
-// PIPE ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static <A>
-    Function<A, A> pipe(
-
-    ) {
-        return a -> a;
-    }
-
-    public static <A, B>
-    Function<A, B> pipe(
-            Function<A, B> ab
-    ) {
-        return a -> ab.apply(a);
-    }
-
-    public static <A, B, C>
-    Function<A, C> pipe(
-            Function<A, B> ab,
-            Function<B, C> bc
-    ) {
-        return a -> bc.apply(ab.apply(a));
-    }
-
-    public static <A, B, C, D>
-    Function<A, D> pipe(
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd
-    ) {
-        return a -> cd.apply(bc.apply(ab.apply(a)));
-    }
-
-    public static <A, B, C, D, E>
-    Function<A, E> pipe(
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de
-    ) {
-        return a -> de.apply(cd.apply(bc.apply(ab.apply(a))));
-    }
-
-    public static <A, B, C, D, E, F>
-    Function<A, F> pipe(
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef
-    ) {
-        return a -> ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))));
-    }
-
-    public static <A, B, C, D, E, F, G>
-    Function<A, G> pipe(
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg
-    ) {
-        return a -> fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))));
-    }
-
-    public static <A, B, C, D, E, F, G, H>
-    Function<A, H> pipe(
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg,
-            Function<G, H> gh
-    ) {
-        return a -> gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))))));
-    }
-
-    public static <A, B, C, D, E, F, G, H, I>
-    Function<A, I> pipe(
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg,
-            Function<G, H> gh,
-            Function<H, I> hi
-    ) {
-        return a -> hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))))));
-    }
-
-    public static <A, B, C, D, E, F, G, H, I, J>
-    Function<A, J> pipe(
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg,
-            Function<G, H> gh,
-            Function<H, I> hi,
-            Function<I, J> ij
-    ) {
-        return a -> ij.apply(hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))))))));
-    }
-
-    public static <A, B, C, D, E, F, G, H, I, J, K>
-    Function<A, K> pipe(
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg,
-            Function<G, H> gh,
-            Function<H, I> hi,
-            Function<I, J> ij,
-            Function<J, K> jk
-    ) {
-        return a -> jk.apply(ij.apply(hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))))))));
-    }
-
-
-// DO_WITH /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public static <A>
-    A doWith(
-            A a
-
-            ) {
-        return a;
-    }
-
-
-    public static <A, B>
-    B doWith(
-            A a,
-            Function<A, B> ab
-    ) {
-        return ab.apply(a);
-    }
-
-
-    public static <A, B, C>
-    C doWith(
-            A a,
-            Function<A, B> ab,
-            Function<B, C> bc
-    ) {
-        return bc.apply(ab.apply(a));
-    }
-
-
-    public static <A, B, C, D>
-    D doWith(
-            A a,
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd
-    ) {
-        return cd.apply(bc.apply(ab.apply(a)));
-    }
-
-
-    public static <A, B, C, D, E>
-    E doWith(
-            A a,
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de
-    ) {
-        return de.apply(cd.apply(bc.apply(ab.apply(a))));
-    }
-
-
-    public static <A, B, C, D, E, F>
-    F doWith(
-            A a,
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef
-    ) {
-        return ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))));
-    }
-
-
-    public static <A, B, C, D, E, F, G>
-    G doWith(
-            A a,
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg
-    ) {
-        return fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))));
-    }
-
-
-    public static <A, B, C, D, E, F, G, H>
-    H doWith(
-            A a,
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg,
-            Function<G, H> gh
-    ) {
-        return gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))))));
-    }
-
-
-    public static <A, B, C, D, E, F, G, H, I>
-    I doWith(
-            A a,
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg,
-            Function<G, H> gh,
-            Function<H, I> hi
-    ) {
-        return hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))))));
-    }
-
-
-    public static <A, B, C, D, E, F, G, H, I, J>
-    J doWith(
-            A a,
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg,
-            Function<G, H> gh,
-            Function<H, I> hi,
-            Function<I, J> ij
-    ) {
-        return ij.apply(hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a)))))))));
-    }
-
-
-    public static <A, B, C, D, E, F, G, H, I, J, K>
-    K doWith(
-            A a,
-            Function<A, B> ab,
-            Function<B, C> bc,
-            Function<C, D> cd,
-            Function<D, E> de,
-            Function<E, F> ef,
-            Function<F, G> fg,
-            Function<G, H> gh,
-            Function<H, I> hi,
-            Function<I, J> ij,
-            Function<J, K> jk
-    ) {
-        return jk.apply(ij.apply(hi.apply(gh.apply(fg.apply(ef.apply(de.apply(cd.apply(bc.apply(ab.apply(a))))))))));
-    }
-
     // PARTIAL APPLICATIONS ////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     public static Function1<Integer, Integer> add(Placeholder _x, Integer y) {
         return (x) -> add(x, y);
@@ -1017,24 +649,22 @@ public class Ravr {
     }
 
     public static <A>
-    Function2<List<A>, List<A>, List<A>> concat(Placeholder _list1, Placeholder _list2) {
-        return Ravr::concat;
-    }
-
-    public static <A>
     Function1<List<A>, List<A>> concat(List<A> list1) {
         return (list2) -> concat(list1, list2);
     }
 
-    public static <A>
-    Function2<List<A>, List<A>, List<A>> concat(Placeholder _list1) {
-        return Ravr::concat;
+    public static Function1<String, String> concat(Placeholder _string1, String string2) {
+        return (string1) -> concat(string1, string2);
     }
 
-    public static <A>
-    Function2<List<A>, List<A>, List<A>> concat() {
-        return Ravr::concat;
+    public static Function1<String, String> concat(String string1, Placeholder _string2) {
+        return (string2) -> concat(string1, string2);
     }
+
+    public static Function1<String, String> concat(String string1) {
+        return (string2) -> concat(string1, string2);
+    }
+
 
     public static <A>
     Predicate<A> contains(Placeholder _a, List<A> list) {
@@ -1094,6 +724,14 @@ public class Ravr {
     public static <A>
     Function2<Predicate<? super A>, List<A>, Integer> count() {
         return Ravr::count;
+    }
+
+    public static Function1<Integer, Integer> dec(Placeholder _x) {
+        return Ravr::dec;
+    }
+
+    public static Function1<Integer, Integer> dec() {
+        return Ravr::dec;
     }
 
     public static <A>
@@ -1506,6 +1144,14 @@ public class Ravr {
         return Ravr::ifElse;
     }
 
+    public static Function1<Integer, Integer> inc(Placeholder _x) {
+        return Ravr::inc;
+    }
+
+    public static Function1<Integer, Integer> inc() {
+        return Ravr::inc;
+    }
+
     public static <A>
     Predicate<Option<A>> isNone(Placeholder _any) {
         return Ravr::isNone;
@@ -1586,6 +1232,7 @@ public class Ravr {
         return Ravr::joinOption;
     }
 
+
     public static <A, B>
     Function1<Function<A, B>, List<B>> map(Placeholder _f, List<A> value) {
         return (f) -> map(f, value);
@@ -1614,6 +1261,96 @@ public class Ravr {
     public static <A, B>
     Function2<Function<A, B>, List<A>, List<B>> map() {
         return Ravr::map;
+    }
+
+    public static <A, B>
+    Function1<Function<A, B>, Option<B>> map_Option(Placeholder _f, Option<A> value) {
+        return (f) -> map_Option(f, value);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> map_Option(Function<A, B> f, Placeholder _value) {
+        return (value) -> map_Option(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, Option<A>, Option<B>> map_Option(Placeholder _f, Placeholder _value) {
+        return Ravr::map_Option;
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> map_Option(Function<A, B> f) {
+        return (value) -> map_Option(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, Option<A>, Option<B>> map_Option(Placeholder _f) {
+        return Ravr::map_Option;
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, Option<A>, Option<B>> map_Option() {
+        return Ravr::map_Option;
+    }
+
+    public static <L, R, Z>
+    Function1<Function<R, Z>, Either<L, Z>> map_Either(Placeholder _f, Either<L, R> value) {
+        return (f) -> map_Either(f, value);
+    }
+
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<L, Z>> map_Either(Function<R, Z> f, Placeholder _value) {
+        return (value) -> map_Either(f, value);
+    }
+
+    public static <L, R, Z>
+    Function2<Function<R, Z>, Either<L, R>, Either<L, Z>> map_Either(Placeholder _f, Placeholder _value) {
+        return Ravr::map_Either;
+    }
+
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<L, Z>> map_Either(Function<R, Z> f) {
+        return (value) -> map_Either(f, value);
+    }
+
+    public static <L, R, Z>
+    Function2<Function<R, Z>, Either<L, R>, Either<L, Z>> map_Either(Placeholder _f) {
+        return Ravr::map_Either;
+    }
+
+    public static <L, R, Z>
+    Function2<Function<R, Z>, Either<L, R>, Either<L, Z>> map_Either() {
+        return Ravr::map_Either;
+    }
+
+    public static <L, R, Z>
+    Function1<Function<L, Z>, Either<Z, R>> map_Either_left(Placeholder _f, Either<L, R> value) {
+        return (f) -> map_Either_left(f, value);
+    }
+
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<Z, R>> map_Either_left(Function<L, Z> f, Placeholder _value) {
+        return (value) -> map_Either_left(f, value);
+    }
+
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> map_Either_left(Placeholder _f, Placeholder _value) {
+        return Ravr::map_Either_left;
+    }
+
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<Z, R>> map_Either_left(Function<L, Z> f) {
+        return (value) -> map_Either_left(f, value);
+    }
+
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> map_Either_left(Placeholder _f) {
+        return Ravr::map_Either_left;
+    }
+
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> map_Either_left() {
+        return Ravr::map_Either_left;
     }
 
     public static <A>
@@ -1653,6 +1390,7 @@ public class Ravr {
     public static Predicate<Boolean> not() {
         return Ravr::not;
     }
+
 
     public static <S extends Copyable<S>, A>
     Function1<Lens<S, A>, S> over(Placeholder _lens, Function<A, A> f, S x) {
@@ -1804,6 +1542,36 @@ public class Ravr {
         return Ravr::set;
     }
 
+    public static <A, C extends Comparable<? super C>>
+    Function1<Function<? super A, ? extends C>, List<A>> sortBy(Placeholder _by, List<A> list) {
+        return (by) -> sortBy(by, list);
+    }
+
+    public static <A, C extends Comparable<? super C>>
+    Function1<List<A>, List<A>> sortBy(Function<? super A, ? extends C> by, Placeholder _list) {
+        return (list) -> sortBy(by, list);
+    }
+
+    public static <A, C extends Comparable<? super C>>
+    Function2<Function<? super A, ? extends C>, List<A>, List<A>> sortBy(Placeholder _by, Placeholder _list) {
+        return Ravr::sortBy;
+    }
+
+    public static <A, C extends Comparable<? super C>>
+    Function1<List<A>, List<A>> sortBy(Function<? super A, ? extends C> by) {
+        return (list) -> sortBy(by, list);
+    }
+
+    public static <A, C extends Comparable<? super C>>
+    Function2<Function<? super A, ? extends C>, List<A>, List<A>> sortBy(Placeholder _by) {
+        return Ravr::sortBy;
+    }
+
+    public static <A, C extends Comparable<? super C>>
+    Function2<Function<? super A, ? extends C>, List<A>, List<A>> sortBy() {
+        return Ravr::sortBy;
+    }
+
     public static <A>
     Function1<List<A>, List<A>> tail(Placeholder _list) {
         return Ravr::tail;
@@ -1828,6 +1596,36 @@ public class Ravr {
 
     public static Function1<String, String> toUpper() {
         return Ravr::toUpper;
+    }
+
+    public static <A>
+    Function1<List<A>, List<A>> without(Placeholder _remove, List<A> list) {
+        return (remove) -> without(remove, list);
+    }
+
+    public static <A>
+    Function1<List<A>, List<A>> without(List<A> remove, Placeholder _list) {
+        return (list) -> without(remove, list);
+    }
+
+    public static <A>
+    Function2<List<A>, List<A>, List<A>> without(Placeholder _remove, Placeholder _list) {
+        return Ravr::without;
+    }
+
+    public static <A>
+    Function1<List<A>, List<A>> without(List<A> remove) {
+        return (list) -> without(remove, list);
+    }
+
+    public static <A>
+    Function2<List<A>, List<A>, List<A>> without(Placeholder _remove) {
+        return Ravr::without;
+    }
+
+    public static <A>
+    Function2<List<A>, List<A>, List<A>> without() {
+        return Ravr::without;
     }
 
     public static <A, B>
@@ -1928,6 +1726,725 @@ public class Ravr {
     public static <T, U, R>
     Function3<BiFunction<T, U, R>, List<T>, List<U>, List<R>> zipWith() {
         return Ravr::zipWith;
+    }
+
+
+// TYPE ALIGNED SEQUENCE FUNCTIONS /////////////////////////////////////////////////////////////////////////////////////
+
+
+    public static <A, B>
+    Function<A, B> compose(
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_A_B.apply(value);
+    }
+
+    public static <A, B, C>
+    Function<A, C> compose(
+            Function<? super B, C> f_B_C,
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_B_C.apply(f_A_B.apply(value));
+    }
+
+    public static <A, B, C, D>
+    Function<A, D> compose(
+            Function<? super C, D> f_C_D,
+            Function<? super B, C> f_B_C,
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_C_D.apply(f_B_C.apply(f_A_B.apply(value)));
+    }
+
+    public static <A, B, C, D, E>
+    Function<A, E> compose(
+            Function<? super D, E> f_D_E,
+            Function<? super C, D> f_C_D,
+            Function<? super B, C> f_B_C,
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))));
+    }
+
+    public static <A, B, C, D, E, F>
+    Function<A, F> compose(
+            Function<? super E, F> f_E_F,
+            Function<? super D, E> f_D_E,
+            Function<? super C, D> f_C_D,
+            Function<? super B, C> f_B_C,
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))));
+    }
+
+    public static <A, B, C, D, E, F, G>
+    Function<A, G> compose(
+            Function<? super F, G> f_F_G,
+            Function<? super E, F> f_E_F,
+            Function<? super D, E> f_D_E,
+            Function<? super C, D> f_C_D,
+            Function<? super B, C> f_B_C,
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H>
+    Function<A, H> compose(
+            Function<? super G, H> f_G_H,
+            Function<? super F, G> f_F_G,
+            Function<? super E, F> f_E_F,
+            Function<? super D, E> f_D_E,
+            Function<? super C, D> f_C_D,
+            Function<? super B, C> f_B_C,
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I>
+    Function<A, I> compose(
+            Function<? super H, I> f_H_I,
+            Function<? super G, H> f_G_H,
+            Function<? super F, G> f_F_G,
+            Function<? super E, F> f_E_F,
+            Function<? super D, E> f_D_E,
+            Function<? super C, D> f_C_D,
+            Function<? super B, C> f_B_C,
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J>
+    Function<A, J> compose(
+            Function<? super I, J> f_I_J,
+            Function<? super H, I> f_H_I,
+            Function<? super G, H> f_G_H,
+            Function<? super F, G> f_F_G,
+            Function<? super E, F> f_E_F,
+            Function<? super D, E> f_D_E,
+            Function<? super C, D> f_C_D,
+            Function<? super B, C> f_B_C,
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_I_J.apply(f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K>
+    Function<A, K> compose(
+            Function<? super J, K> f_J_K,
+            Function<? super I, J> f_I_J,
+            Function<? super H, I> f_H_I,
+            Function<? super G, H> f_G_H,
+            Function<? super F, G> f_F_G,
+            Function<? super E, F> f_E_F,
+            Function<? super D, E> f_D_E,
+            Function<? super C, D> f_C_D,
+            Function<? super B, C> f_B_C,
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_J_K.apply(f_I_J.apply(f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))))))));
+    }
+
+
+    public static <A, B>
+    Function<A, B> pipe(
+            Function<? super A, B> f_A_B
+    ) {
+        return value -> f_A_B.apply(value);
+    }
+
+    public static <A, B, C>
+    Function<A, C> pipe(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C
+    ) {
+        return value -> f_B_C.apply(f_A_B.apply(value));
+    }
+
+    public static <A, B, C, D>
+    Function<A, D> pipe(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D
+    ) {
+        return value -> f_C_D.apply(f_B_C.apply(f_A_B.apply(value)));
+    }
+
+    public static <A, B, C, D, E>
+    Function<A, E> pipe(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E
+    ) {
+        return value -> f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))));
+    }
+
+    public static <A, B, C, D, E, F>
+    Function<A, F> pipe(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F
+    ) {
+        return value -> f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))));
+    }
+
+    public static <A, B, C, D, E, F, G>
+    Function<A, G> pipe(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G
+    ) {
+        return value -> f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H>
+    Function<A, H> pipe(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H
+    ) {
+        return value -> f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I>
+    Function<A, I> pipe(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Function<? super H, I> f_H_I
+    ) {
+        return value -> f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J>
+    Function<A, J> pipe(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Function<? super H, I> f_H_I,
+            Function<? super I, J> f_I_J
+    ) {
+        return value -> f_I_J.apply(f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K>
+    Function<A, K> pipe(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Function<? super H, I> f_H_I,
+            Function<? super I, J> f_I_J,
+            Function<? super J, K> f_J_K
+    ) {
+        return value -> f_J_K.apply(f_I_J.apply(f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))))))));
+    }
+
+
+    public static <A, B>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Predicate<B> predicate
+    ) {
+        return value -> predicate.test(f_A_B.apply(value));
+    }
+
+    public static <A, B, C>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Predicate<C> predicate
+    ) {
+        return value -> predicate.test(f_B_C.apply(f_A_B.apply(value)));
+    }
+
+    public static <A, B, C, D>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Predicate<D> predicate
+    ) {
+        return value -> predicate.test(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))));
+    }
+
+    public static <A, B, C, D, E>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Predicate<E> predicate
+    ) {
+        return value -> predicate.test(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))));
+    }
+
+    public static <A, B, C, D, E, F>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Predicate<F> predicate
+    ) {
+        return value -> predicate.test(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))));
+    }
+
+    public static <A, B, C, D, E, F, G>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Predicate<G> predicate
+    ) {
+        return value -> predicate.test(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Predicate<H> predicate
+    ) {
+        return value -> predicate.test(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Function<? super H, I> f_H_I,
+            Predicate<I> predicate
+    ) {
+        return value -> predicate.test(f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Function<? super H, I> f_H_I,
+            Function<? super I, J> f_I_J,
+            Predicate<J> predicate
+    ) {
+        return value -> predicate.test(f_I_J.apply(f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K>
+    Predicate<A> pipe_Predicate(
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Function<? super H, I> f_H_I,
+            Function<? super I, J> f_I_J,
+            Function<? super J, K> f_J_K,
+            Predicate<K> predicate
+    ) {
+        return value -> predicate.test(f_J_K.apply(f_I_J.apply(f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))))))))));
+    }
+
+
+    public static <A, B>
+    B doWith(
+            A value,
+            Function<? super A, B> f_A_B
+    ) {
+        return f_A_B.apply(value);
+    }
+
+    public static <A, B, C>
+    C doWith(
+            A value,
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C
+    ) {
+        return f_B_C.apply(f_A_B.apply(value));
+    }
+
+    public static <A, B, C, D>
+    D doWith(
+            A value,
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D
+    ) {
+        return f_C_D.apply(f_B_C.apply(f_A_B.apply(value)));
+    }
+
+    public static <A, B, C, D, E>
+    E doWith(
+            A value,
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E
+    ) {
+        return f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))));
+    }
+
+    public static <A, B, C, D, E, F>
+    F doWith(
+            A value,
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F
+    ) {
+        return f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))));
+    }
+
+    public static <A, B, C, D, E, F, G>
+    G doWith(
+            A value,
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G
+    ) {
+        return f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H>
+    H doWith(
+            A value,
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H
+    ) {
+        return f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I>
+    I doWith(
+            A value,
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Function<? super H, I> f_H_I
+    ) {
+        return f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J>
+    J doWith(
+            A value,
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Function<? super H, I> f_H_I,
+            Function<? super I, J> f_I_J
+    ) {
+        return f_I_J.apply(f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value)))))))));
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K>
+    K doWith(
+            A value,
+            Function<? super A, B> f_A_B,
+            Function<? super B, C> f_B_C,
+            Function<? super C, D> f_C_D,
+            Function<? super D, E> f_D_E,
+            Function<? super E, F> f_E_F,
+            Function<? super F, G> f_F_G,
+            Function<? super G, H> f_G_H,
+            Function<? super H, I> f_H_I,
+            Function<? super I, J> f_I_J,
+            Function<? super J, K> f_J_K
+    ) {
+        return f_J_K.apply(f_I_J.apply(f_H_I.apply(f_G_H.apply(f_F_G.apply(f_E_F.apply(f_D_E.apply(f_C_D.apply(f_B_C.apply(f_A_B.apply(value))))))))));
+    }
+
+
+    public static <A, B>
+    Function<A, List<B>> pipeK_List(
+            Function<? super A, List<B>> f_A_B
+    ) {
+        return value -> f_A_B.apply(value);
+    }
+
+    public static <A, B, C>
+    Function<A, List<C>> pipeK_List(
+            Function<? super A, List<B>> f_A_B,
+            Function<? super B, List<C>> f_B_C
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C);
+    }
+
+    public static <A, B, C, D>
+    Function<A, List<D>> pipeK_List(
+            Function<? super A, List<B>> f_A_B,
+            Function<? super B, List<C>> f_B_C,
+            Function<? super C, List<D>> f_C_D
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D);
+    }
+
+    public static <A, B, C, D, E>
+    Function<A, List<E>> pipeK_List(
+            Function<? super A, List<B>> f_A_B,
+            Function<? super B, List<C>> f_B_C,
+            Function<? super C, List<D>> f_C_D,
+            Function<? super D, List<E>> f_D_E
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E);
+    }
+
+    public static <A, B, C, D, E, F>
+    Function<A, List<F>> pipeK_List(
+            Function<? super A, List<B>> f_A_B,
+            Function<? super B, List<C>> f_B_C,
+            Function<? super C, List<D>> f_C_D,
+            Function<? super D, List<E>> f_D_E,
+            Function<? super E, List<F>> f_E_F
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F);
+    }
+
+    public static <A, B, C, D, E, F, G>
+    Function<A, List<G>> pipeK_List(
+            Function<? super A, List<B>> f_A_B,
+            Function<? super B, List<C>> f_B_C,
+            Function<? super C, List<D>> f_C_D,
+            Function<? super D, List<E>> f_D_E,
+            Function<? super E, List<F>> f_E_F,
+            Function<? super F, List<G>> f_F_G
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G);
+    }
+
+    public static <A, B, C, D, E, F, G, H>
+    Function<A, List<H>> pipeK_List(
+            Function<? super A, List<B>> f_A_B,
+            Function<? super B, List<C>> f_B_C,
+            Function<? super C, List<D>> f_C_D,
+            Function<? super D, List<E>> f_D_E,
+            Function<? super E, List<F>> f_E_F,
+            Function<? super F, List<G>> f_F_G,
+            Function<? super G, List<H>> f_G_H
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G).flatMap(f_G_H);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I>
+    Function<A, List<I>> pipeK_List(
+            Function<? super A, List<B>> f_A_B,
+            Function<? super B, List<C>> f_B_C,
+            Function<? super C, List<D>> f_C_D,
+            Function<? super D, List<E>> f_D_E,
+            Function<? super E, List<F>> f_E_F,
+            Function<? super F, List<G>> f_F_G,
+            Function<? super G, List<H>> f_G_H,
+            Function<? super H, List<I>> f_H_I
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G).flatMap(f_G_H).flatMap(f_H_I);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J>
+    Function<A, List<J>> pipeK_List(
+            Function<? super A, List<B>> f_A_B,
+            Function<? super B, List<C>> f_B_C,
+            Function<? super C, List<D>> f_C_D,
+            Function<? super D, List<E>> f_D_E,
+            Function<? super E, List<F>> f_E_F,
+            Function<? super F, List<G>> f_F_G,
+            Function<? super G, List<H>> f_G_H,
+            Function<? super H, List<I>> f_H_I,
+            Function<? super I, List<J>> f_I_J
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G).flatMap(f_G_H).flatMap(f_H_I).flatMap(f_I_J);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K>
+    Function<A, List<K>> pipeK_List(
+            Function<? super A, List<B>> f_A_B,
+            Function<? super B, List<C>> f_B_C,
+            Function<? super C, List<D>> f_C_D,
+            Function<? super D, List<E>> f_D_E,
+            Function<? super E, List<F>> f_E_F,
+            Function<? super F, List<G>> f_F_G,
+            Function<? super G, List<H>> f_G_H,
+            Function<? super H, List<I>> f_H_I,
+            Function<? super I, List<J>> f_I_J,
+            Function<? super J, List<K>> f_J_K
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G).flatMap(f_G_H).flatMap(f_H_I).flatMap(f_I_J).flatMap(f_J_K);
+    }
+
+
+    public static <A, B>
+    Function<A, Option<B>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B
+    ) {
+        return value -> f_A_B.apply(value);
+    }
+
+    public static <A, B, C>
+    Function<A, Option<C>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B,
+            Function<? super B, Option<C>> f_B_C
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C);
+    }
+
+    public static <A, B, C, D>
+    Function<A, Option<D>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B,
+            Function<? super B, Option<C>> f_B_C,
+            Function<? super C, Option<D>> f_C_D
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D);
+    }
+
+    public static <A, B, C, D, E>
+    Function<A, Option<E>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B,
+            Function<? super B, Option<C>> f_B_C,
+            Function<? super C, Option<D>> f_C_D,
+            Function<? super D, Option<E>> f_D_E
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E);
+    }
+
+    public static <A, B, C, D, E, F>
+    Function<A, Option<F>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B,
+            Function<? super B, Option<C>> f_B_C,
+            Function<? super C, Option<D>> f_C_D,
+            Function<? super D, Option<E>> f_D_E,
+            Function<? super E, Option<F>> f_E_F
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F);
+    }
+
+    public static <A, B, C, D, E, F, G>
+    Function<A, Option<G>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B,
+            Function<? super B, Option<C>> f_B_C,
+            Function<? super C, Option<D>> f_C_D,
+            Function<? super D, Option<E>> f_D_E,
+            Function<? super E, Option<F>> f_E_F,
+            Function<? super F, Option<G>> f_F_G
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G);
+    }
+
+    public static <A, B, C, D, E, F, G, H>
+    Function<A, Option<H>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B,
+            Function<? super B, Option<C>> f_B_C,
+            Function<? super C, Option<D>> f_C_D,
+            Function<? super D, Option<E>> f_D_E,
+            Function<? super E, Option<F>> f_E_F,
+            Function<? super F, Option<G>> f_F_G,
+            Function<? super G, Option<H>> f_G_H
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G).flatMap(f_G_H);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I>
+    Function<A, Option<I>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B,
+            Function<? super B, Option<C>> f_B_C,
+            Function<? super C, Option<D>> f_C_D,
+            Function<? super D, Option<E>> f_D_E,
+            Function<? super E, Option<F>> f_E_F,
+            Function<? super F, Option<G>> f_F_G,
+            Function<? super G, Option<H>> f_G_H,
+            Function<? super H, Option<I>> f_H_I
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G).flatMap(f_G_H).flatMap(f_H_I);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J>
+    Function<A, Option<J>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B,
+            Function<? super B, Option<C>> f_B_C,
+            Function<? super C, Option<D>> f_C_D,
+            Function<? super D, Option<E>> f_D_E,
+            Function<? super E, Option<F>> f_E_F,
+            Function<? super F, Option<G>> f_F_G,
+            Function<? super G, Option<H>> f_G_H,
+            Function<? super H, Option<I>> f_H_I,
+            Function<? super I, Option<J>> f_I_J
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G).flatMap(f_G_H).flatMap(f_H_I).flatMap(f_I_J);
+    }
+
+    public static <A, B, C, D, E, F, G, H, I, J, K>
+    Function<A, Option<K>> pipeK_Option(
+            Function<? super A, Option<B>> f_A_B,
+            Function<? super B, Option<C>> f_B_C,
+            Function<? super C, Option<D>> f_C_D,
+            Function<? super D, Option<E>> f_D_E,
+            Function<? super E, Option<F>> f_E_F,
+            Function<? super F, Option<G>> f_F_G,
+            Function<? super G, Option<H>> f_G_H,
+            Function<? super H, Option<I>> f_H_I,
+            Function<? super I, Option<J>> f_I_J,
+            Function<? super J, Option<K>> f_J_K
+    ) {
+        return value -> f_A_B.apply(value).flatMap(f_B_C).flatMap(f_C_D).flatMap(f_D_E).flatMap(f_E_F).flatMap(f_F_G).flatMap(f_G_H).flatMap(f_H_I).flatMap(f_I_J).flatMap(f_J_K);
     }
 
 }

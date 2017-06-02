@@ -2,7 +2,7 @@
 
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
-_v0.0.8 (experimental, incomplete)_
+_v0.0.9 (experimental, incomplete)_
 
 ## Adding it to your project
 
@@ -26,7 +26,7 @@ Then you can import it as usual:
         <dependency>
             <groupId>de.michaelzinn.ravr</groupId>
             <artifactId>ravr</artifactId>
-            <version>0.0.8</version>
+            <version>0.0.9</version>
         </dependency>
     </dependencies>
 ```
@@ -34,7 +34,7 @@ Then you can import it as usual:
 ### Gradle
 
 ```gradle
-compile 'de.michaelzinn.ravr:ravr:0.0.8'
+compile 'de.michaelzinn.ravr:ravr:0.0.9'
 ```
 
 ## Curried functions & partial function application
@@ -176,6 +176,7 @@ pipe(
 
 This list is generated automatically and slightly inaccurate right now.
 
+
 | Status | Function | Note |
 |:----:|:--------|:-----|
 | :white_check_mark: | add | |
@@ -219,7 +220,7 @@ This list is generated automatically and slightly inaccurate right now.
 |    | countBy |   |
 |    | curry |   |
 |    | curryN |   |
-|    | dec |   |
+| :white_check_mark: | dec | |
 | :white_check_mark: | defaultTo | |
 |    | descend |   |
 |    | difference |   |
@@ -264,7 +265,7 @@ This list is generated automatically and slightly inaccurate right now.
 |    | identical |   |
 | :white_check_mark: | identity | |
 | :white_check_mark: | ifElse | |
-|    | inc |   |
+| :white_check_mark: | inc | |
 |    | indexBy |   |
 |    | indexOf |   |
 |    | init |   |
@@ -303,6 +304,9 @@ This list is generated automatically and slightly inaccurate right now.
 |    | mapAccum |   |
 |    | mapAccumRight |   |
 |    | mapObjIndexed |   |
+| :white_check_mark: | map_Either | |
+| :white_check_mark: | map_Either_left | |
+| :white_check_mark: | map_Option | |
 |    | match |   |
 |    | mathMod |   |
 |    | max |   |
@@ -377,7 +381,7 @@ This list is generated automatically and slightly inaccurate right now.
 | :white_check_mark: | set | |
 |    | slice |   |
 |    | sort |   |
-|    | sortBy |   |
+| :white_check_mark: | sortBy | |
 |    | sortWith |   |
 |    | split |   |
 |    | splitAt |   |
@@ -428,7 +432,7 @@ This list is generated automatically and slightly inaccurate right now.
 |    | when |   |
 |    | where |   |
 |    | whereEq |   |
-|    | without |   |
+| :white_check_mark: | without | |
 |    | xprod |   |
 | :white_check_mark: | zip | |
 |    | zipObj |   |
