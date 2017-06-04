@@ -130,8 +130,8 @@ public class RavrTest {
     public void testApplyTuple() {
         Tuple2<String, Integer> stuff = Tuple.of("a", 1);
 
-        assertThat(applyTuple((l, r) -> l + r, stuff), is("a1"));
-        assertThat(applyTuple((String l, Integer r) -> l + r).apply(stuff), is("a1"));
+        assertThat(apply((l, r) -> l + r, stuff), is("a1"));
+        assertThat(apply((String l, Integer r) -> l + r).apply(stuff), is("a1"));
     }
 
 
