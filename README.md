@@ -2,7 +2,7 @@
 
 This is a partial port of the [Ramda.js functional programming library](http://ramdajs.com) to work with [vavr types](http://www.vavr.io).
 
-_v0.0.9 (experimental, incomplete)_
+_v0.0.10 (experimental, incomplete)_
 
 ## Adding it to your project
 
@@ -26,7 +26,7 @@ Then you can import it as usual:
         <dependency>
             <groupId>de.michaelzinn.ravr</groupId>
             <artifactId>ravr</artifactId>
-            <version>0.0.9</version>
+            <version>0.0.10</version>
         </dependency>
     </dependencies>
 ```
@@ -34,7 +34,7 @@ Then you can import it as usual:
 ### Gradle
 
 ```gradle
-compile 'de.michaelzinn.ravr:ravr:0.0.9'
+compile 'de.michaelzinn.ravr:ravr:0.0.10'
 ```
 
 ## Curried functions & partial function application
@@ -176,7 +176,6 @@ pipe(
 
 This list is generated automatically and slightly inaccurate right now.
 
-
 | Status | Function | Note |
 |:----:|:--------|:-----|
 | :white_check_mark: | add | |
@@ -188,12 +187,15 @@ This list is generated automatically and slightly inaccurate right now.
 |    | and |   |
 | :white_check_mark: | any | |
 |    | anyPass |   |
-| :neutral_face: | ap | Only works on Lists.|
+| :white_check_mark: | ap | |
 |    | aperture |   |
-|    | append |   |
-|    | apply |   |
+| :white_check_mark: | append | |
+| :white_check_mark: | apply |   |
 |    | applySpec |   |
-| :neutral_face: | applyTuple | Only works on Tuples of size 2 and 3. Will be fixed.|
+| :white_check_mark: | ap_List | |
+| :white_check_mark: | ap_Option | |
+| :white_check_mark: | apᐸListᐳ | |
+| :white_check_mark: | apᐸOptionᐳ | |
 |    | ascend |   |
 |    | assoc |   |
 | :heavy_multiplication_x: | assocPath |   |
@@ -248,7 +250,11 @@ This list is generated automatically and slightly inaccurate right now.
 | :white_check_mark: | findIndex | |
 |    | findLast |   |
 |    | findLastIndex |   |
-| :neutral_face: | flatMap | Only for lists?|
+| :white_check_mark: | flatMap | |
+| :white_check_mark: | flatMap_List | |
+| :white_check_mark: | flatMap_Option | |
+| :white_check_mark: | flatMapᐸListᐳ | |
+| :white_check_mark: | flatMapᐸOptionᐳ | |
 |    | flatten |   |
 |    | flip |   |
 | :white_check_mark: | forEach | |
@@ -262,6 +268,8 @@ This list is generated automatically and slightly inaccurate right now.
 |    | has |   |
 |    | hasIn |   |
 | :white_check_mark: | head | |
+| :white_check_mark: | head_String | |
+| :white_check_mark: | headᐸStringᐳ | |
 |    | identical |   |
 | :white_check_mark: | identity | |
 | :white_check_mark: | ifElse | |
@@ -303,10 +311,16 @@ This list is generated automatically and slightly inaccurate right now.
 | :white_check_mark: | map | |
 |    | mapAccum |   |
 |    | mapAccumRight |   |
+| :diamond_shape_with_a_dot_inside: | mapLeft | Maps the left side of an Either|
+| :diamond_shape_with_a_dot_inside: | mapLeft_Either | |
+| :diamond_shape_with_a_dot_inside: | mapLeftᐸEitherᐳ | |
 |    | mapObjIndexed |   |
 | :white_check_mark: | map_Either | |
-| :white_check_mark: | map_Either_left | |
+| :white_check_mark: | map_List | |
 | :white_check_mark: | map_Option | |
+| :white_check_mark: | mapᐸEitherᐳ | |
+| :white_check_mark: | mapᐸListᐳ | |
+| :white_check_mark: | mapᐸOptionᐳ | |
 |    | match |   |
 |    | mathMod |   |
 |    | max |   |
@@ -356,7 +370,7 @@ This list is generated automatically and slightly inaccurate right now.
 |    | pipeK |   |
 |    | pipeP |   |
 |    | pluck |   |
-|    | prepend |   |
+| :white_check_mark: | prepend | |
 |    | product |   |
 |    | project |   |
 |    | prop |   |
@@ -365,7 +379,8 @@ This list is generated automatically and slightly inaccurate right now.
 |    | propOr |   |
 |    | props |   |
 |    | propSatisfies |   |
-|    | range |   |
+| :white_check_mark: | range | |
+| :diamond_shape_with_a_dot_inside: | rangeC | Closed range|
 |    | reduce |   |
 |    | reduceBy |   |
 |    | reduced |   |
@@ -373,7 +388,7 @@ This list is generated automatically and slightly inaccurate right now.
 |    | reduceWhile |   |
 |    | reject |   |
 |    | remove |   |
-|    | repeat |   |
+| :neutral_face: | repeat | Can't be curried.|
 |    | replace |   |
 | :white_check_mark: | reverse | |
 |    | scan |   |

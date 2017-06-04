@@ -15,7 +15,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static de.michaelzinn.ravr.Placeholder.__;
 import static de.michaelzinn.ravr.Ravr.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -210,7 +209,7 @@ public class RavrTest {
                 is(Option.some(3))
         );
         assertThat(
-                flatMapOption(length).apply(Option.some("hey")),
+                flatMapᐸOptionᐳ(length).apply(Option.some("hey")),
                 is(Option.some(3))
         );
 
@@ -223,7 +222,7 @@ public class RavrTest {
         );
 
         assertThat(
-                flatMapList(twice).apply(List.of("a", "b")),
+                flatMapᐸListᐳ(twice).apply(List.of("a", "b")),
                 is(List.of("a", "a", "b", "b"))
         );
 
@@ -521,6 +520,18 @@ public class RavrTest {
 
     }
     */
+
+    @Test
+    public void testRepeat() {
+        assertThat(
+                repeat(4, "e"),
+                is(List.of("e","e","e","e"))
+        );
+        assertThat(
+                repeat(0, "a"),
+                is(List.empty())
+        );
+    }
 
     @Test
     public void testReverse() {

@@ -47,31 +47,45 @@ public class Ravr {
     }
 
     public static <A, B>
+    List<B> ap(List<? extends Function<? super A, ? extends B>> fs, List<A> as) {
+        return (List<B>) ap_Traversable((Traversable) fs, (Traversable) as);
+    }
+
+    public static <A, B>
+    List<B> ap_List(List<? extends Function<? super A, ? extends B>> fs, List<A> as) {
+        return (List<B>) ap_Traversable((Traversable) fs, (Traversable) as);
+    }
+
+    public static <A, B>
+    List<B> apᐸListᐳ(List<? extends Function<? super A, ? extends B>> fs, List<A> as) {
+        return (List<B>) ap_Traversable((Traversable) fs, (Traversable) as);
+    }
+
+    public static <A, B>
     Option<B> ap(Option<? extends Function<? super A, ? extends B>> of, Option<A> oa) {
         return of.flatMap(oa::map);
     }
 
     public static <A, B>
-    List<B> ap(List<? extends Function<? super A, ? extends B>> fs, List<A> as) {
-        return (List<B>) ap((Traversable) fs, (Traversable) as);
+    Option<B> ap_Option(Option<? extends Function<? super A, ? extends B>> of, Option<A> oa) {
+        return of.flatMap(oa::map);
+    }
+
+    public static <A, B>
+    Option<B> apᐸOptionᐳ(Option<? extends Function<? super A, ? extends B>> of, Option<A> oa) {
+        return of.flatMap(oa::map);
     }
 
     private static <A, B, T extends Traversable>
-    T ap(T afxy, T ax) {
+    T ap_Traversable(T afxy, T ax) {
         Traversable<Function<A, B>> fs = (Traversable<Function<A, B>>) afxy;
         Traversable<A> xs = (Traversable<A>) ax;
         return (T) fs.flatMap(f -> xs.map(f::apply));
     }
 
-
-    public static <L, R, T>
-    T applyTuple(BiFunction<L, R, T> f, Tuple2<L, R> tuple) {
-        return tuple.apply(f);
-    }
-
-    public static <T1, T2, T3, R>
-    R applyTuple(Function3<? super T1, ? super T2, ? super T3, ? extends R> f, Tuple3<T1, T2, T3> tuple) {
-        return tuple.apply(f);
+    public static <A>
+    List<A> append(A a, List<A> list) {
+        return list.append(a);
     }
 
     public static <A>
@@ -129,7 +143,6 @@ public class Ravr {
         return list.filter(p);
     }
 
-
     public static <A>
     int findIndex(Predicate<A> predicate, List<A> list) {
         return list.indexWhere(predicate);
@@ -140,34 +153,30 @@ public class Ravr {
         return ma.flatMap(f);
     }
 
-    /*
-    public static <A, B, T extends Traversable>
-    Function1<T, T> flatMap(Function1<A,T> f) {
-        return ma -> {
-            if(ma instanceof List) {
-                return (T) flatMap((Function1<A,List<B>>) f, (List<A>) ma);
-            } else if(ma instanceof Option) {
-                return (T) flatMap((Function1<A,Option<B>>) f, (Option<A>) ma);
-            }
-        }
-    }
-    */
-
     public static <A, B>
-    Function1<List<A>, List<B>> flatMapList(Function<A, List<B>> f) {
-        return ma -> flatMap(f, ma);
-    }
-
-    public static <A, B>
-    Option<B> flatMap(Function<A, Option<B>> f, Option<A> ma) {
+    List<B> flatMap_List(Function<A, List<B>> f, List<A> ma) {
         return ma.flatMap(f);
     }
 
     public static <A, B>
-    Function1<Option<A>, Option<B>> flatMapOption(Function<A, Option<B>> f) {
-        return ma -> flatMap(f, ma);
+    List<B> flatMapᐸListᐳ(Function<A, List<B>> f, List<A> ma) {
+        return ma.flatMap(f);
     }
 
+    public static <A, B>
+    Option<B> flatMap(Function<A, Option<B>> f, Option<A> option) {
+        return option.flatMap(f);
+    }
+
+    public static <A, B>
+    Option<B> flatMap_Option(Function<A, Option<B>> f, Option<A> option) {
+        return option.flatMap(f);
+    }
+
+    public static <A, B>
+    Option<B> flatMapᐸOptionᐳ(Function<A, Option<B>> f, Option<A> ma) {
+        return ma.flatMap(f);
+    }
 
     public static <A>
     List<A> forEach(Consumer<A> consumer, List<A> list) {
@@ -188,6 +197,36 @@ public class Ravr {
     public static <A>
     Option<A> head(List<A> list) {
         return list.headOption();
+    }
+
+    public static <A>
+    Option<A> head_List(List<A> list) {
+        return list.headOption();
+    }
+
+    public static <A>
+    Option<A> headᐸListᐳ(List<A> list) {
+        return list.headOption();
+    }
+
+    public static Option<Character> head(String string) {
+        return string.isEmpty() ? Option.none() : Option.some(string.charAt(0));
+    }
+
+    public static Option<Character> head_String(String string) {
+        return string.isEmpty() ? Option.none() : Option.some(string.charAt(0));
+    }
+
+    public static Option<Character> headᐸStringᐳ(String string) {
+        return string.isEmpty() ? Option.none() : Option.some(string.charAt(0));
+    }
+
+    public static Function<String, Option<Character>> head_String() {
+        return Ravr::headᐸStringᐳ;
+    }
+
+    public static Function<String, Option<Character>> headᐸStringᐳ() {
+        return Ravr::headᐸStringᐳ;
     }
 
     public static <A>
@@ -246,7 +285,22 @@ public class Ravr {
     }
 
     public static <A, B>
+    List<B> map_List(Function<A, B> f, List<A> value) {
+        return value.map(f);
+    }
+
+    public static <A, B>
+    List<B> mapᐸListᐳ(Function<A, B> f, List<A> value) {
+        return value.map(f);
+    }
+
+    public static <A, B>
     Option<B> map_Option(Function<A, B> f, Option<A> value) {
+        return value.map(f);
+    }
+
+    public static <A, B>
+    Option<B> mapᐸOptionᐳ(Function<A, B> f, Option<A> value) {
         return value.map(f);
     }
 
@@ -256,7 +310,22 @@ public class Ravr {
     }
 
     public static <L, R, Z>
-    Either<Z, R> map_Either_left(Function<L, Z> f, Either<L, R> either) {
+    Either<L, Z> mapᐸEitherᐳ(Function<R, Z> f, Either<L, R> either) {
+        return either.map(f);
+    }
+
+    public static <L, R, Z>
+    Either<Z, R> mapLeft(Function<L, Z> f, Either<L, R> either) {
+        return either.mapLeft(f);
+    }
+
+    public static <L, R, Z>
+    Either<Z, R> mapLeft_Either(Function<L, Z> f, Either<L, R> either) {
+        return either.mapLeft(f);
+    }
+
+    public static <L, R, Z>
+    Either<Z, R> mapLeftᐸEitherᐳ(Function<L, Z> f, Either<L, R> either) {
         return either.mapLeft(f);
     }
 
@@ -343,6 +412,24 @@ public class Ravr {
     }
 
     public static <A>
+    List<A> prepend(A a, List<A> list) {
+        return list.prepend(a);
+    }
+
+    public static List<Integer> range(Integer from, Integer toExclusive) {
+        return List.range(from, toExclusive);
+    }
+
+    public static List<Integer> rangeC(Integer from, Integer to) {
+        return List.rangeClosed(from, to);
+    }
+
+    public static <A>
+    List<A> repeat(Integer n, A a) {
+        return List.range(0, n).map(egal -> a);
+    }
+
+    public static <A>
     List<A> reverse(List<A> list) {
         return list.reverse();
     }
@@ -412,6 +499,47 @@ public class Ravr {
 
 
     // PARTIAL APPLICATIONS ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public static <T1, R>
+    R apply(Function<T1, R> f, Tuple1<T1> tuple) {
+        return tuple.apply(f);
+    }
+
+    public static <T1, T2, R>
+    R apply(BiFunction<T1, T2, R> f, Tuple2<T1, T2> tuple) {
+        return tuple.apply(f);
+    }
+
+    public static <T1, T2, T3, R>
+    R apply(Function3<T1, T2, T3, R> f, Tuple3<T1, T2, T3> tuple) {
+        return tuple.apply(f);
+    }
+
+    public static <T1, T2, T3, T4, R>
+    R apply(Function4<T1, T2, T3, T4, R> f, Tuple4<T1, T2, T3, T4> tuple) {
+        return tuple.apply(f);
+    }
+
+    public static <T1, T2, T3, T4, T5, R>
+    R apply(Function5<T1, T2, T3, T4, T5, R> f, Tuple5<T1, T2, T3, T4, T5> tuple) {
+        return tuple.apply(f);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, R>
+    R apply(Function6<T1, T2, T3, T4, T5, T6, R> f, Tuple6<T1, T2, T3, T4, T5, T6> tuple) {
+        return tuple.apply(f);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, T7, R>
+    R apply(Function7<T1, T2, T3, T4, T5, T6, T7, R> f, Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple) {
+        return tuple.apply(f);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, R>
+    R apply(Function8<T1, T2, T3, T4, T5, T6, T7, T8, R> f, Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple) {
+        return tuple.apply(f);
+    }
 
 
     public static Function1<Integer, Integer> add(Placeholder _x, Integer y) {
@@ -598,34 +726,199 @@ public class Ravr {
         return (as) -> ap(fs, as);
     }
 
-    public static <L, R, T>
-    Function1<BiFunction<L, R, T>, T> applyTuple(Placeholder _f, Tuple2<L, R> tuple) {
-        return (f) -> applyTuple(f, tuple);
+    public static <A, B>
+    Function1<List<? extends Function<? super A, ? extends B>>, List<B>> ap_List(Placeholder _fs, List<A> as) {
+        return (fs) -> ap_List(fs, as);
     }
 
-    public static <L, R, T>
-    Function1<Tuple2<L, R>, T> applyTuple(BiFunction<L, R, T> f, Placeholder _tuple) {
-        return (tuple) -> applyTuple(f, tuple);
+    public static <A, B>
+    Function1<List<A>, List<B>> ap_List(List<? extends Function<? super A, ? extends B>> fs, Placeholder _as) {
+        return (as) -> ap_List(fs, as);
     }
 
-    public static <L, R, T>
-    Function1<Tuple2<L, R>, T> applyTuple(BiFunction<L, R, T> f) {
-        return (tuple) -> applyTuple(f, tuple);
+    public static <A, B>
+    Function1<List<A>, List<B>> ap_List(List<? extends Function<? super A, ? extends B>> fs) {
+        return (as) -> ap_List(fs, as);
+    }
+
+    public static <A, B>
+    Function1<Option<? extends Function<? super A, ? extends B>>, Option<B>> ap_Option(Placeholder _fs, Option<A> as) {
+        return (fs) -> ap_Option(fs, as);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> ap_Option(Option<? extends Function<? super A, ? extends B>> fs, Placeholder _as) {
+        return (as) -> ap_Option(fs, as);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> ap_Option(Option<? extends Function<? super A, ? extends B>> fs) {
+        return (as) -> ap_Option(fs, as);
+    }
+
+    public static <A>
+    Function1<A, List<A>> append(Placeholder _a, List<A> list) {
+        return (a) -> append(a, list);
+    }
+
+    public static <A>
+    Function1<List<A>, List<A>> append(A a, Placeholder _list) {
+        return (list) -> append(a, list);
+    }
+
+    public static <A>
+    Function1<List<A>, List<A>> append(A a) {
+        return (list) -> append(a, list);
+    }
+
+    public static <T1, R>
+    Function1<Function1<T1, R>, R> apply(Placeholder _f, Tuple1<T1> tuple) {
+        return (f) -> apply(f, tuple);
+    }
+
+    public static <T1, R>
+    Function1<Tuple1<T1>, R> apply(Function1<T1, R> f, Placeholder _tuple) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, R>
+    Function1<Tuple1<T1>, R> apply(Function1<T1, R> f) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, R>
+    Function1<Function2<T1, T2, R>, R> apply(Placeholder _f, Tuple2<T1, T2> tuple) {
+        return (f) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, R>
+    Function1<Tuple2<T1, T2>, R> apply(Function2<T1, T2, R> f, Placeholder _tuple) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, R>
+    Function1<Tuple2<T1, T2>, R> apply(Function2<T1, T2, R> f) {
+        return (tuple) -> apply(f, tuple);
     }
 
     public static <T1, T2, T3, R>
-    Function1<Function3<? super T1, ? super T2, ? super T3, ? extends R>, R> applyTuple(Placeholder _f, Tuple3<T1, T2, T3> tuple) {
-        return (f) -> applyTuple(f, tuple);
+    Function1<Function3<T1, T2, T3, R>, R> apply(Placeholder _f, Tuple3<T1, T2, T3> tuple) {
+        return (f) -> apply(f, tuple);
     }
 
     public static <T1, T2, T3, R>
-    Function1<Tuple3<T1, T2, T3>, R> applyTuple(Function3<? super T1, ? super T2, ? super T3, ? extends R> f, Placeholder _tuple) {
-        return (tuple) -> applyTuple(f, tuple);
+    Function1<Tuple3<T1, T2, T3>, R> apply(Function3<T1, T2, T3, R> f, Placeholder _tuple) {
+        return (tuple) -> apply(f, tuple);
     }
 
     public static <T1, T2, T3, R>
-    Function1<Tuple3<T1, T2, T3>, R> applyTuple(Function3<? super T1, ? super T2, ? super T3, ? extends R> f) {
-        return (tuple) -> applyTuple(f, tuple);
+    Function1<Tuple3<T1, T2, T3>, R> apply(Function3<T1, T2, T3, R> f) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, R>
+    Function1<Function4<T1, T2, T3, T4, R>, R> apply(Placeholder _f, Tuple4<T1, T2, T3, T4> tuple) {
+        return (f) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, R>
+    Function1<Tuple4<T1, T2, T3, T4>, R> apply(Function4<T1, T2, T3, T4, R> f, Placeholder _tuple) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, R>
+    Function1<Tuple4<T1, T2, T3, T4>, R> apply(Function4<T1, T2, T3, T4, R> f) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, R>
+    Function1<Function5<T1, T2, T3, T4, T5, R>, R> apply(Placeholder _f, Tuple5<T1, T2, T3, T4, T5> tuple) {
+        return (f) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, R>
+    Function1<Tuple5<T1, T2, T3, T4, T5>, R> apply(Function5<T1, T2, T3, T4, T5, R> f, Placeholder _tuple) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, R>
+    Function1<Tuple5<T1, T2, T3, T4, T5>, R> apply(Function5<T1, T2, T3, T4, T5, R> f) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, R>
+    Function1<Function6<T1, T2, T3, T4, T5, T6, R>, R> apply(Placeholder _f, Tuple6<T1, T2, T3, T4, T5, T6> tuple) {
+        return (f) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, R>
+    Function1<Tuple6<T1, T2, T3, T4, T5, T6>, R> apply(Function6<T1, T2, T3, T4, T5, T6, R> f, Placeholder _tuple) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, R>
+    Function1<Tuple6<T1, T2, T3, T4, T5, T6>, R> apply(Function6<T1, T2, T3, T4, T5, T6, R> f) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, T7, R>
+    Function1<Function7<T1, T2, T3, T4, T5, T6, T7, R>, R> apply(Placeholder _f, Tuple7<T1, T2, T3, T4, T5, T6, T7> tuple) {
+        return (f) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, T7, R>
+    Function1<Tuple7<T1, T2, T3, T4, T5, T6, T7>, R> apply(Function7<T1, T2, T3, T4, T5, T6, T7, R> f, Placeholder _tuple) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, T7, R>
+    Function1<Tuple7<T1, T2, T3, T4, T5, T6, T7>, R> apply(Function7<T1, T2, T3, T4, T5, T6, T7, R> f) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, R>
+    Function1<Function8<T1, T2, T3, T4, T5, T6, T7, T8, R>, R> apply(Placeholder _f, Tuple8<T1, T2, T3, T4, T5, T6, T7, T8> tuple) {
+        return (f) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, R>
+    Function1<Tuple8<T1, T2, T3, T4, T5, T6, T7, T8>, R> apply(Function8<T1, T2, T3, T4, T5, T6, T7, T8, R> f, Placeholder _tuple) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, R>
+    Function1<Tuple8<T1, T2, T3, T4, T5, T6, T7, T8>, R> apply(Function8<T1, T2, T3, T4, T5, T6, T7, T8, R> f) {
+        return (tuple) -> apply(f, tuple);
+    }
+
+    public static <A, B>
+    Function1<List<? extends Function<? super A, ? extends B>>, List<B>> apᐸListᐳ(Placeholder _fs, List<A> as) {
+        return (fs) -> apᐸListᐳ(fs, as);
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> apᐸListᐳ(List<? extends Function<? super A, ? extends B>> fs, Placeholder _as) {
+        return (as) -> apᐸListᐳ(fs, as);
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> apᐸListᐳ(List<? extends Function<? super A, ? extends B>> fs) {
+        return (as) -> apᐸListᐳ(fs, as);
+    }
+
+    public static <A, B>
+    Function1<Option<? extends Function<? super A, ? extends B>>, Option<B>> apᐸOptionᐳ(Placeholder _fs, Option<A> as) {
+        return (fs) -> apᐸOptionᐳ(fs, as);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> apᐸOptionᐳ(Option<? extends Function<? super A, ? extends B>> fs, Placeholder _as) {
+        return (as) -> apᐸOptionᐳ(fs, as);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> apᐸOptionᐳ(Option<? extends Function<? super A, ? extends B>> fs) {
+        return (as) -> apᐸOptionᐳ(fs, as);
     }
 
     public static <A>
@@ -884,6 +1177,126 @@ public class Ravr {
         return Ravr::flatMap;
     }
 
+    public static <A, B>
+    Function1<Function<A, List<B>>, List<B>> flatMap_List(Placeholder _f, List<A> ma) {
+        return (f) -> flatMap_List(f, ma);
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> flatMap_List(Function<A, List<B>> f, Placeholder _ma) {
+        return (ma) -> flatMap_List(f, ma);
+    }
+
+    public static <A, B>
+    Function2<Function<A, List<B>>, List<A>, List<B>> flatMap_List(Placeholder _f, Placeholder _ma) {
+        return Ravr::flatMap_List;
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> flatMap_List(Function<A, List<B>> f) {
+        return (ma) -> flatMap_List(f, ma);
+    }
+
+    public static <A, B>
+    Function2<Function<A, List<B>>, List<A>, List<B>> flatMap_List(Placeholder _f) {
+        return Ravr::flatMap_List;
+    }
+
+    public static <A, B>
+    Function2<Function<A, List<B>>, List<A>, List<B>> flatMap_List() {
+        return Ravr::flatMap_List;
+    }
+
+    public static <A, B>
+    Function1<Function<A, Option<B>>, Option<B>> flatMap_Option(Placeholder _f, Option<A> ma) {
+        return (f) -> flatMap_Option(f, ma);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> flatMap_Option(Function<A, Option<B>> f, Placeholder _ma) {
+        return (ma) -> flatMap_Option(f, ma);
+    }
+
+    public static <A, B>
+    Function2<Function<A, Option<B>>, Option<A>, Option<B>> flatMap_Option(Placeholder _f, Placeholder _ma) {
+        return Ravr::flatMap_Option;
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> flatMap_Option(Function<A, Option<B>> f) {
+        return (ma) -> flatMap_Option(f, ma);
+    }
+
+    public static <A, B>
+    Function2<Function<A, Option<B>>, Option<A>, Option<B>> flatMap_Option(Placeholder _f) {
+        return Ravr::flatMap_Option;
+    }
+
+    public static <A, B>
+    Function2<Function<A, Option<B>>, Option<A>, Option<B>> flatMap_Option() {
+        return Ravr::flatMap_Option;
+    }
+
+    public static <A, B>
+    Function1<Function<A, List<B>>, List<B>> flatMapᐸListᐳ(Placeholder _f, List<A> ma) {
+        return (f) -> flatMapᐸListᐳ(f, ma);
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> flatMapᐸListᐳ(Function<A, List<B>> f, Placeholder _ma) {
+        return (ma) -> flatMapᐸListᐳ(f, ma);
+    }
+
+    public static <A, B>
+    Function2<Function<A, List<B>>, List<A>, List<B>> flatMapᐸListᐳ(Placeholder _f, Placeholder _ma) {
+        return Ravr::flatMapᐸListᐳ;
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> flatMapᐸListᐳ(Function<A, List<B>> f) {
+        return (ma) -> flatMapᐸListᐳ(f, ma);
+    }
+
+    public static <A, B>
+    Function2<Function<A, List<B>>, List<A>, List<B>> flatMapᐸListᐳ(Placeholder _f) {
+        return Ravr::flatMapᐸListᐳ;
+    }
+
+    public static <A, B>
+    Function2<Function<A, List<B>>, List<A>, List<B>> flatMapᐸListᐳ() {
+        return Ravr::flatMapᐸListᐳ;
+    }
+
+    public static <A, B>
+    Function1<Function<A, Option<B>>, Option<B>> flatMapᐸOptionᐳ(Placeholder _f, Option<A> ma) {
+        return (f) -> flatMapᐸOptionᐳ(f, ma);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> flatMapᐸOptionᐳ(Function<A, Option<B>> f, Placeholder _ma) {
+        return (ma) -> flatMapᐸOptionᐳ(f, ma);
+    }
+
+    public static <A, B>
+    Function2<Function<A, Option<B>>, Option<A>, Option<B>> flatMapᐸOptionᐳ(Placeholder _f, Placeholder _ma) {
+        return Ravr::flatMapᐸOptionᐳ;
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> flatMapᐸOptionᐳ(Function<A, Option<B>> f) {
+        return (ma) -> flatMapᐸOptionᐳ(f, ma);
+    }
+
+    public static <A, B>
+    Function2<Function<A, Option<B>>, Option<A>, Option<B>> flatMapᐸOptionᐳ(Placeholder _f) {
+        return Ravr::flatMapᐸOptionᐳ;
+    }
+
+    public static <A, B>
+    Function2<Function<A, Option<B>>, Option<A>, Option<B>> flatMapᐸOptionᐳ() {
+        return Ravr::flatMapᐸOptionᐳ;
+    }
+
     public static <A>
     Function1<Consumer<A>, List<A>> forEach(Placeholder _consumer, List<A> list) {
         return (consumer) -> forEach(consumer, list);
@@ -983,6 +1396,7 @@ public class Ravr {
     Function1<List<A>, Option<A>> head() {
         return Ravr::head;
     }
+
 
     public static <A>
     Function1<A, A> identity(Placeholder _a) {
@@ -1263,34 +1677,94 @@ public class Ravr {
         return Ravr::map;
     }
 
-    public static <A, B>
-    Function1<Function<A, B>, Option<B>> map_Option(Placeholder _f, Option<A> value) {
-        return (f) -> map_Option(f, value);
+    public static <L, R, Z>
+    Function1<Function<L, Z>, Either<Z, R>> mapLeft(Placeholder _f, Either<L, R> value) {
+        return (f) -> mapLeft(f, value);
     }
 
-    public static <A, B>
-    Function1<Option<A>, Option<B>> map_Option(Function<A, B> f, Placeholder _value) {
-        return (value) -> map_Option(f, value);
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<Z, R>> mapLeft(Function<L, Z> f, Placeholder _value) {
+        return (value) -> mapLeft(f, value);
     }
 
-    public static <A, B>
-    Function2<Function<A, B>, Option<A>, Option<B>> map_Option(Placeholder _f, Placeholder _value) {
-        return Ravr::map_Option;
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> mapLeft(Placeholder _f, Placeholder _value) {
+        return Ravr::mapLeft;
     }
 
-    public static <A, B>
-    Function1<Option<A>, Option<B>> map_Option(Function<A, B> f) {
-        return (value) -> map_Option(f, value);
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<Z, R>> mapLeft(Function<L, Z> f) {
+        return (value) -> mapLeft(f, value);
     }
 
-    public static <A, B>
-    Function2<Function<A, B>, Option<A>, Option<B>> map_Option(Placeholder _f) {
-        return Ravr::map_Option;
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> mapLeft(Placeholder _f) {
+        return Ravr::mapLeft;
     }
 
-    public static <A, B>
-    Function2<Function<A, B>, Option<A>, Option<B>> map_Option() {
-        return Ravr::map_Option;
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> mapLeft() {
+        return Ravr::mapLeft;
+    }
+
+    public static <L, R, Z>
+    Function1<Function<L, Z>, Either<Z, R>> mapLeft_Either(Placeholder _f, Either<L, R> value) {
+        return (f) -> mapLeft_Either(f, value);
+    }
+
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<Z, R>> mapLeft_Either(Function<L, Z> f, Placeholder _value) {
+        return (value) -> mapLeft_Either(f, value);
+    }
+
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> mapLeft_Either(Placeholder _f, Placeholder _value) {
+        return Ravr::mapLeft_Either;
+    }
+
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<Z, R>> mapLeft_Either(Function<L, Z> f) {
+        return (value) -> mapLeft_Either(f, value);
+    }
+
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> mapLeft_Either(Placeholder _f) {
+        return Ravr::mapLeft_Either;
+    }
+
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> mapLeft_Either() {
+        return Ravr::mapLeft_Either;
+    }
+
+    public static <L, R, Z>
+    Function1<Function<L, Z>, Either<Z, R>> mapLeftᐸEitherᐳ(Placeholder _f, Either<L, R> value) {
+        return (f) -> mapLeftᐸEitherᐳ(f, value);
+    }
+
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<Z, R>> mapLeftᐸEitherᐳ(Function<L, Z> f, Placeholder _value) {
+        return (value) -> mapLeftᐸEitherᐳ(f, value);
+    }
+
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> mapLeftᐸEitherᐳ(Placeholder _f, Placeholder _value) {
+        return Ravr::mapLeftᐸEitherᐳ;
+    }
+
+    public static <L, R, Z>
+    Function1<Either<L, R>, Either<Z, R>> mapLeftᐸEitherᐳ(Function<L, Z> f) {
+        return (value) -> mapLeftᐸEitherᐳ(f, value);
+    }
+
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> mapLeftᐸEitherᐳ(Placeholder _f) {
+        return Ravr::mapLeftᐸEitherᐳ;
+    }
+
+    public static <L, R, Z>
+    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> mapLeftᐸEitherᐳ() {
+        return Ravr::mapLeftᐸEitherᐳ;
     }
 
     public static <L, R, Z>
@@ -1323,34 +1797,154 @@ public class Ravr {
         return Ravr::map_Either;
     }
 
-    public static <L, R, Z>
-    Function1<Function<L, Z>, Either<Z, R>> map_Either_left(Placeholder _f, Either<L, R> value) {
-        return (f) -> map_Either_left(f, value);
+    public static <A, B>
+    Function1<Function<A, B>, List<B>> map_List(Placeholder _f, List<A> value) {
+        return (f) -> map_List(f, value);
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> map_List(Function<A, B> f, Placeholder _value) {
+        return (value) -> map_List(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, List<A>, List<B>> map_List(Placeholder _f, Placeholder _value) {
+        return Ravr::map_List;
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> map_List(Function<A, B> f) {
+        return (value) -> map_List(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, List<A>, List<B>> map_List(Placeholder _f) {
+        return Ravr::map_List;
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, List<A>, List<B>> map_List() {
+        return Ravr::map_List;
+    }
+
+    public static <A, B>
+    Function1<Function<A, B>, Option<B>> map_Option(Placeholder _f, Option<A> value) {
+        return (f) -> map_Option(f, value);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> map_Option(Function<A, B> f, Placeholder _value) {
+        return (value) -> map_Option(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, Option<A>, Option<B>> map_Option(Placeholder _f, Placeholder _value) {
+        return Ravr::map_Option;
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> map_Option(Function<A, B> f) {
+        return (value) -> map_Option(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, Option<A>, Option<B>> map_Option(Placeholder _f) {
+        return Ravr::map_Option;
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, Option<A>, Option<B>> map_Option() {
+        return Ravr::map_Option;
     }
 
     public static <L, R, Z>
-    Function1<Either<L, R>, Either<Z, R>> map_Either_left(Function<L, Z> f, Placeholder _value) {
-        return (value) -> map_Either_left(f, value);
+    Function1<Function<R, Z>, Either<L, Z>> mapᐸEitherᐳ(Placeholder _f, Either<L, R> value) {
+        return (f) -> mapᐸEitherᐳ(f, value);
     }
 
     public static <L, R, Z>
-    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> map_Either_left(Placeholder _f, Placeholder _value) {
-        return Ravr::map_Either_left;
+    Function1<Either<L, R>, Either<L, Z>> mapᐸEitherᐳ(Function<R, Z> f, Placeholder _value) {
+        return (value) -> mapᐸEitherᐳ(f, value);
     }
 
     public static <L, R, Z>
-    Function1<Either<L, R>, Either<Z, R>> map_Either_left(Function<L, Z> f) {
-        return (value) -> map_Either_left(f, value);
+    Function2<Function<R, Z>, Either<L, R>, Either<L, Z>> mapᐸEitherᐳ(Placeholder _f, Placeholder _value) {
+        return Ravr::mapᐸEitherᐳ;
     }
 
     public static <L, R, Z>
-    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> map_Either_left(Placeholder _f) {
-        return Ravr::map_Either_left;
+    Function1<Either<L, R>, Either<L, Z>> mapᐸEitherᐳ(Function<R, Z> f) {
+        return (value) -> mapᐸEitherᐳ(f, value);
     }
 
     public static <L, R, Z>
-    Function2<Function<L, Z>, Either<L, R>, Either<Z, R>> map_Either_left() {
-        return Ravr::map_Either_left;
+    Function2<Function<R, Z>, Either<L, R>, Either<L, Z>> mapᐸEitherᐳ(Placeholder _f) {
+        return Ravr::mapᐸEitherᐳ;
+    }
+
+    public static <L, R, Z>
+    Function2<Function<R, Z>, Either<L, R>, Either<L, Z>> mapᐸEitherᐳ() {
+        return Ravr::mapᐸEitherᐳ;
+    }
+
+    public static <A, B>
+    Function1<Function<A, B>, List<B>> mapᐸListᐳ(Placeholder _f, List<A> value) {
+        return (f) -> mapᐸListᐳ(f, value);
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> mapᐸListᐳ(Function<A, B> f, Placeholder _value) {
+        return (value) -> mapᐸListᐳ(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, List<A>, List<B>> mapᐸListᐳ(Placeholder _f, Placeholder _value) {
+        return Ravr::mapᐸListᐳ;
+    }
+
+    public static <A, B>
+    Function1<List<A>, List<B>> mapᐸListᐳ(Function<A, B> f) {
+        return (value) -> mapᐸListᐳ(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, List<A>, List<B>> mapᐸListᐳ(Placeholder _f) {
+        return Ravr::mapᐸListᐳ;
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, List<A>, List<B>> mapᐸListᐳ() {
+        return Ravr::mapᐸListᐳ;
+    }
+
+    public static <A, B>
+    Function1<Function<A, B>, Option<B>> mapᐸOptionᐳ(Placeholder _f, Option<A> value) {
+        return (f) -> mapᐸOptionᐳ(f, value);
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> mapᐸOptionᐳ(Function<A, B> f, Placeholder _value) {
+        return (value) -> mapᐸOptionᐳ(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, Option<A>, Option<B>> mapᐸOptionᐳ(Placeholder _f, Placeholder _value) {
+        return Ravr::mapᐸOptionᐳ;
+    }
+
+    public static <A, B>
+    Function1<Option<A>, Option<B>> mapᐸOptionᐳ(Function<A, B> f) {
+        return (value) -> mapᐸOptionᐳ(f, value);
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, Option<A>, Option<B>> mapᐸOptionᐳ(Placeholder _f) {
+        return Ravr::mapᐸOptionᐳ;
+    }
+
+    public static <A, B>
+    Function2<Function<A, B>, Option<A>, Option<B>> mapᐸOptionᐳ() {
+        return Ravr::mapᐸOptionᐳ;
     }
 
     public static <A>
@@ -1461,6 +2055,70 @@ public class Ravr {
     Function3<Lens<S, A>, Function<A, A>, S, S> over() {
         return Ravr::over;
     }
+
+    public static <A>
+    Function1<A, List<A>> prepend(Placeholder _a, List<A> list) {
+        return (a) -> prepend(a, list);
+    }
+
+    public static <A>
+    Function1<List<A>, List<A>> prepend(A a, Placeholder _list) {
+        return (list) -> prepend(a, list);
+    }
+
+    public static <A>
+    Function1<List<A>, List<A>> prepend(A a) {
+        return (list) -> prepend(a, list);
+    }
+
+    public static Function1<Integer, List<Integer>> range(Placeholder _from, Integer toExclusive) {
+        return (from) -> range(from, toExclusive);
+    }
+
+    public static Function1<Integer, List<Integer>> range(Integer from, Placeholder _toExclusive) {
+        return (toExclusive) -> range(from, toExclusive);
+    }
+
+    public static Function2<Integer, Integer, List<Integer>> range(Placeholder _from, Placeholder _toExclusive) {
+        return Ravr::range;
+    }
+
+    public static Function1<Integer, List<Integer>> range(Integer from) {
+        return (toExclusive) -> range(from, toExclusive);
+    }
+
+    public static Function2<Integer, Integer, List<Integer>> range(Placeholder _from) {
+        return Ravr::range;
+    }
+
+    public static Function2<Integer, Integer, List<Integer>> range() {
+        return Ravr::range;
+    }
+
+    public static Function1<Integer, List<Integer>> rangeC(Placeholder _from, Integer to) {
+        return (from) -> rangeC(from, to);
+    }
+
+    public static Function1<Integer, List<Integer>> rangeC(Integer from, Placeholder _to) {
+        return (to) -> rangeC(from, to);
+    }
+
+    public static Function2<Integer, Integer, List<Integer>> rangeC(Placeholder _from, Placeholder _to) {
+        return Ravr::rangeC;
+    }
+
+    public static Function1<Integer, List<Integer>> rangeC(Integer from) {
+        return (to) -> rangeC(from, to);
+    }
+
+    public static Function2<Integer, Integer, List<Integer>> rangeC(Placeholder _from) {
+        return Ravr::rangeC;
+    }
+
+    public static Function2<Integer, Integer, List<Integer>> rangeC() {
+        return Ravr::rangeC;
+    }
+
 
     public static <A>
     Function1<List<A>, List<A>> reverse(Placeholder _list) {
@@ -2448,3 +3106,4 @@ public class Ravr {
     }
 
 }
+

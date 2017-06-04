@@ -14,14 +14,14 @@
   },
  
   "version": {
-    "name": "0.0.9",
+    "name": "0.0.10",
     "released": "2017-06-02",
     "gpgSign": false
   },
  
   "files":
   [
-    {"includePattern": "build/libs/(.*)", "uploadPattern": "de/michaelzinn/ravr/ravr/0.0.9/$1"}
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "de/michaelzinn/ravr/ravr/0.0.10/$1"}
   ],
   "publish": true
 }
