@@ -61,7 +61,7 @@ You can compose functions in two ways.
 
 ### Compose
 
-Similiar to mathematical composition. This is a vararg function.
+Similar to mathematical composition. This is a vararg function.
 
 ```java
 
@@ -126,7 +126,7 @@ class Thing implements Copyable<Thing> {
 }
 ```
 
-_Note: Your IDE might tell you to replace the lamda with a method reference. This might not work because of reasons._
+_Note: Your IDE might tell you to replace the lambda with a method reference. This might not work because of reasons._
 
 You can create a lens using a pair of getters and setters. You can use the lens in combination with get, set and over:
 
